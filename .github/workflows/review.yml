@@ -17,16 +17,16 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 20.9.0
+          node-version: 18
 
       - name: Install dependencies
-        run: yarn install
+        run: pnpm install
 
       - name: ESLint Checks
-        run: yarn lint
+        run: pnpm lint
 
       - name: Coverage Test
-        run: yarn cy:test-all
+        run: pnpm cy:test-all
 
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@master
