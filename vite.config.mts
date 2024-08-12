@@ -25,7 +25,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
-      'tsv2-library': resolve(__dirname, 'node_modules/tsv2-library'),
+      'wangsvue': resolve(__dirname, 'node_modules/wangsvue'),
     },
   },
   server: {

@@ -1,30 +1,29 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import { TSBreadcrumb, TSCard, TSTabMenu } from 'tsv2-library';
-import { BreadcrumbMenu } from 'tsv2-library/dist/src/components/v2/Breadcrumb/Breadcrumb.vue';
+import { ref } from 'vue';
 import { useBreadcrumbStore } from '@/store';
+import { Breadcrumb, Card, TabMenu } from 'wangsvue';
+import { MenuItem } from 'wangsvue/components/menuitem';
 
 const { breadcrumbs } = useBreadcrumbStore();
 
-const tabMenuItems = ref([
+const tabMenus = ref<MenuItem>([
   {
-    label: 'Tab',
-    to: 'tab',
+    label: 'Home',
+    route: 'home',
   },
   {
-    label: 'Another Tab',
-    to: 'another-tab',
+    label: 'Another Page',
+    route: 'another-page',
   },
 ]);
 </script>
 
 <template>
-  <TSBreadcrumb :menus="breadcrumbs" />
-
-  <TSCard>
+  <Breadcrumb :menus="breadcrumbs" />
+  <Card>
     <template #content>
-      <TSTabMenu :active-index="0" :menu="tabMenuItems" type="tab" />
+      <TabMenu :menu="tabMenus" />
       <router-view />
     </template>
-  </TSCard>
+  </Card>
 </template>

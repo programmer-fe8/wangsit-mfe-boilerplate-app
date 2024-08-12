@@ -10,7 +10,7 @@ import '@cypress/code-coverage/support';
  * Importing Stylesheets
  */
 import '../../src/assets/css/main.css';
-import 'tsv2-library/dist/style.css';
+import 'wangsvue/style.css';
 import './tailwind.css';
 
 import { registerComponents } from '../../src/utils';

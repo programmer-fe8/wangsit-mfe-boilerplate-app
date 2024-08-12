@@ -5,15 +5,15 @@ const routes: Readonly<RouteRecordRaw[]> = [
   {
     path: '/',
     component: (): Promise<Component> => import('@/layout/ExampleLayout.vue'),
-    redirect: '/tab',
+    redirect: '/home',
     children: [
       {
-        path: 'tab',
+        path: 'home',
         name: 'Exampleview',
         component: (): Promise<Component> => import('@/views/ExampleView.vue'),
       },
       {
-        path: 'another-tab',
+        path: 'another-page',
         name: 'AnotherExampleview',
         component: (): Promise<Component> => import('@/views/ExampleView2.vue'),
       },

@@ -1,9 +1,3 @@
-import { addCompareSnapshotCommand } from 'cypress-visual-regression/dist/command';
-
-addCompareSnapshotCommand({
-  errorThreshold: 0.1,
-});
-
 Cypress.Commands.add('getSection', (section) => {
   cy.get(`[data-ts-section="${section}"]`);
 });
@@ -19,4 +13,8 @@ Cypress.Commands.add('login', () => {
   };
 
   localStorage.setItem('user', JSON.stringify(user));
+});
+
+Cypress.Commands.add('getByData', (dataName: string, value: string) => {
+  cy.get(`[data-${dataName}="${value}"]`);
 });
