@@ -69,4 +69,4 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           script: |
             cd ${{ secrets.FOLDER }}
-            git pull https://${{ secrets.PAT }}@github.com/fixedassetv2-fe/tsv2-mfe-boilerplate-app.git dev-build
+            git pull https://${{ secrets.PAT }}@github.com/fewangsit/wangsit-mfe-boilerplate-app.git dev-build
