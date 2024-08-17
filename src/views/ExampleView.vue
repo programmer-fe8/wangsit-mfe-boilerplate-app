@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { onMounted, shallowRef } from 'vue';
 import { useBreadcrumbStore } from '@/store';
-import { BreadcrumbMenu } from 'wangsvue/components/breadcrumb/Breadcrumb.vue';
+import { BreadcrumbMenu } from 'wangsvue/components/breadcrumb/Breadcrumb.vue.d';
+import ExampleModule from '@/components/modules/ExampleModule/ExampleModule.vue';
 
 const { setBreadcrumbs } = useBreadcrumbStore();
 
@@ -19,5 +20,5 @@ onMounted(() => {
 });
 </script>
 <template>
-  <h1>Hello Word</h1>
+  <ExampleModule />
 </template>

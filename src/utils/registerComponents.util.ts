@@ -1,5 +1,5 @@
 import { App } from 'vue';
-import { Tooltip, WangsVue, Preset } from 'wangsvue';
+import { Tooltip, WangsVue, Preset, ToastService } from 'wangsvue';
 
 import router from '@/router';
 
@@ -13,6 +13,7 @@ const registerComponents = (app: App): void => {
   });
 
   app.use(router);
+  app.use(ToastService);
 
   app.directive('Tooltip', Tooltip);
 };

@@ -3,7 +3,7 @@ import coverage from '@cypress/code-coverage/task';
 
 export default defineConfig({
   env: {
-    CY_APP_EXAMPLE_API: 'https://example.dummy-api.com',
+    CY_APP_WANGS_DUMMY_REST_API: 'https://example.dummy-api.com',
   },
   e2e: {
     baseUrl: 'http://localhost:9090',

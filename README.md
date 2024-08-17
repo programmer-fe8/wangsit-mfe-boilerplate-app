@@ -7,7 +7,9 @@ pnpm install
 
 ### Compiles and hot-reloads for development
 ```
-pnpm serve
+Copy .env.example and Rename into .env
+
+pnpm dev
 ```
 
 ### Compiles and minifies for production
