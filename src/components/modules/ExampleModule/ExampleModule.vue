@@ -14,6 +14,7 @@ import UserServices from '@/services/example.service';
 import DialogDeleteUser from './DialogDeleteUser/DialogDeleteUser.vue';
 import ExampleModuleTableFilter from './ExampleModuleTableFilter.vue';
 import ExampleModuleHeader from './ExampleModuleHeader.vue';
+import ExampleModuleQuickFilter from './ExampleModuleQuickFilter.vue';
 
 const selectedUser = shallowRef<User>();
 const showDeleteUserDialog = shallowRef(false);
@@ -113,6 +114,7 @@ const getTableData = async (
 
 <template>
   <ExampleModuleHeader />
+  <ExampleModuleQuickFilter />
   <ExampleModuleTableFilter />
   <DataTable
     :columns="tableColumns"
