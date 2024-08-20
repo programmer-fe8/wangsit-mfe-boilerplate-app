@@ -26,9 +26,10 @@
     "single-spa-vue": "3.0.0",
     "systemjs-webpack-interop": "2.3.7",
     "tailwindcss": "3.4.9",
+    "vite-tsconfig-paths": "^5.0.1",
     "vue": "3.4.37",
     "vue-router": "4.4.3",
-    "wangsvue": "^1.4.26"
+    "wangsvue": "^1.4.38"
   },
   "devDependencies": {
     "@cypress/code-coverage": "3.12.44",

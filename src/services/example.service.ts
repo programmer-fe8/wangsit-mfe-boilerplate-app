@@ -3,11 +3,9 @@ import { getBaseURL } from '@/utils/getBaseURL.util';
 import { GetOptionsParams, GetUsersParams } from '@/dto/user.dto';
 import { FetchResponse } from 'wangsvue/components/datatable/DataTable.vue';
 import { User } from '@/types/user.type';
-import { MultiSelectOption } from 'wangsvue/types/options.type';
+import { FetchOptionResponse } from 'wangsvue/components/filtercontainer/FilterContainer.vue';
 
-type GetOptionsResponse = FetchResponse<
-  Record<keyof GetOptionsParams, MultiSelectOption[]>
->;
+type GetOptionsResponse = FetchOptionResponse<GetOptionsParams>;
 
 const API = ({ headers = {}, params = {} } = {}): AxiosInstance => {
   const user = JSON.parse(localStorage.getItem('user') ?? '{}');

@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import { DialogConfirm } from 'wangsvue';
+import { DialogConfirm, eventBus } from 'wangsvue';
 import { DialogConfirmProps } from 'wangsvue/components/dialogconfirm/DialogConfirm.vue.d';
 
-defineProps<Omit<DialogConfirmProps, 'header' | 'severity'>>();
+defineProps<
+  Omit<DialogConfirmProps, 'header' | 'severity' | 'closeAfterConfirm'>
+>();
+
 const visible = defineModel<boolean>('visible', { default: false });
 </script>
 
@@ -10,7 +13,9 @@ const visible = defineModel<boolean>('visible', { default: false });
   <DialogConfirm
     v-bind="$props"
     v-model:visible="visible"
-    @confirm="visible = false"
+    @confirm="eventBus.emit('data-table:update', {})"
+    actionable
+    confirm-label="Yakin"
     header="Delete User"
     header-icon="delete-bin-7"
     severity="danger"
