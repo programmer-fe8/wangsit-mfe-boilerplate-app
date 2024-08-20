@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { shallowRef } from 'vue';
+import { ref, shallowRef } from 'vue';
 import { User } from '@/types/user.type';
 import { MenuItem } from 'wangsvue/components/menuitem';
 import {
@@ -8,8 +8,9 @@ import {
   ButtonFilter,
   ButtonSearch,
 } from 'wangsvue';
+import DialogDeleteUser from './DialogDeleteUser/DialogDeleteUser.vue';
 
-const dataSelected = shallowRef<User[]>([]);
+const dataSelected = ref<User[]>([]);
 const showDeleteUserDialog = shallowRef(false);
 
 const bulkAction: MenuItem[] = [
@@ -29,9 +30,17 @@ const bulkAction: MenuItem[] = [
     <ButtonBulkAction
       v-model:selected-data="dataSelected"
       :options="bulkAction"
+      @update:selected-data="console.log"
+      table-name="user-list"
     />
     <ButtonSearch class="ml-auto" table-name="user-list" />
     <ButtonDownload file-name="Download" table-name="user-list" />
     <ButtonFilter table-name="user-list" />
   </div>
+
+  <DialogDeleteUser
+    v-model:visible="showDeleteUserDialog"
+    :list="dataSelected"
+    list-label="name"
+  />
 </template>

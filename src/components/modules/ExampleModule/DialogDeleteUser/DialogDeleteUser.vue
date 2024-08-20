@@ -8,6 +8,7 @@ const visible = defineModel<boolean>('visible', { default: false });
 
 <template>
   <DialogConfirm
+    v-bind="$props"
     v-model:visible="visible"
     @confirm="visible = false"
     header="Delete User"

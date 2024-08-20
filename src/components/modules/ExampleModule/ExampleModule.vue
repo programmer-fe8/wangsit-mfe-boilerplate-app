@@ -16,7 +16,7 @@ import ExampleModuleTableFilter from './ExampleModuleTableFilter.vue';
 import ExampleModuleHeader from './ExampleModuleHeader.vue';
 
 const selectedUser = shallowRef<User>();
-const showDeleteUserDialog = shallowRef(true);
+const showDeleteUserDialog = shallowRef(false);
 
 const singleAction: MenuItem[] = [
   {
