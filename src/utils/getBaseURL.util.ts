@@ -14,16 +14,3 @@ export const getBaseURL = (env: string): string | undefined => {
 
   return process.env['VUE_' + env]; // When building for production with Vue CLI
 };
-
-/**
- * Extracts the hostname from a given URL.
- *
- * @param url - The base URL.
- * @returns The hostname/domain (e.g., example.com).
- */
-export const getHostName = (url: string | undefined): string => {
-  if (!url) return '';
-
-  const urlObject = new URL(url);
-  return urlObject.hostname;
-};

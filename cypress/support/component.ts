@@ -5,6 +5,7 @@ import { App, DefineComponent } from 'vue';
 import { mount } from '@cypress/vue';
 
 import '@cypress/code-coverage/support';
+import './commands';
 
 /**
  * Importing Stylesheets

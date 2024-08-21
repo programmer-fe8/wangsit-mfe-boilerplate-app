@@ -6,7 +6,7 @@ import { MenuItem } from 'wangsvue/components/menuitem';
 
 const { breadcrumbs } = useBreadcrumbStore();
 
-const tabMenus = ref<MenuItem>([
+const tabMenus = ref<MenuItem[]>([
   {
     label: 'Home',
     route: 'home',

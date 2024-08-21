@@ -11,10 +11,10 @@
     "serve:https": "vue-cli-service serve --https true",
     "tailwind": "tailwind -i ./src/assets/css/main.css -o ./cypress/support/tailwind.css",
     "check-coverage": "lcov-total ./coverage/lcov.info",
-    "cy:run-ct": "pnpm tailwind && cypress run --component --headed",
+    "cy:run-ct": "pnpm tailwind && cypress run --component",
     "cy:open-ct": "pnpm tailwind && cypress open --component",
     "cy:run-e2e": "pnpm tailwind && cypress run",
-    "cy:open-e2e": "pnpm tailwind && cypress open",
+    "cy:open-e2e": "pnpm tailwind && cypress open --e2e",
     "cy:test-all": "pnpm tailwind && start-server-and-test dev http://localhost:9090 cy:run-e2e && pnpm cy:run-ct"
   },
   "dependencies": {
@@ -26,10 +26,9 @@
     "single-spa-vue": "3.0.0",
     "systemjs-webpack-interop": "2.3.7",
     "tailwindcss": "3.4.9",
-    "vite-tsconfig-paths": "^5.0.1",
     "vue": "3.4.37",
     "vue-router": "4.4.3",
-    "wangsvue": "^1.4.43"
+    "wangsvue": "^1.4.54"
   },
   "devDependencies": {
     "@cypress/code-coverage": "3.12.44",

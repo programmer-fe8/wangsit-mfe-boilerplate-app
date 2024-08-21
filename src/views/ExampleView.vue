@@ -8,10 +8,10 @@ const { setBreadcrumbs } = useBreadcrumbStore();
 
 const menus = shallowRef<BreadcrumbMenu[]>([
   {
-    name: 'Home',
+    name: 'Wangs',
   },
   {
-    name: 'Tab',
+    name: 'Home',
   },
 ]);
 

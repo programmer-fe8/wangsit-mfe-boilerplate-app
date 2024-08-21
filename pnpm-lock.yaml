@@ -32,9 +32,6 @@ importers:
       tailwindcss:
         specifier: 3.4.9
         version: 3.4.9
-      vite-tsconfig-paths:
-        specifier: ^5.0.1
-        version: 5.0.1(typescript@5.5.4)(vite@5.4.0(@types/node@22.2.0)(sass@1.77.8)(terser@5.31.5))
       vue:
         specifier: 3.4.37
         version: 3.4.37(typescript@5.5.4)
@@ -42,8 +39,8 @@ importers:
         specifier: 4.4.3
         version: 4.4.3(vue@3.4.37(typescript@5.5.4))
       wangsvue:
-        specifier: ^1.4.43
-        version: 1.4.43
+        specifier: ^1.4.54
+        version: 1.4.54
     devDependencies:
       '@cypress/code-coverage':
         specifier: 3.12.44
@@ -3075,9 +3072,6 @@ packages:
     resolution: {integrity: sha512-jhIXaOzy1sb8IyocaruWSn1TjmnBVs8Ayhcy83rmxNJ8q2uWKCAj3CnJY+KpGSXCueAPc0i05kVvVKtP1t9S3g==}
     engines: {node: '>=10'}
 
-  globrex@0.1.2:
-    resolution: {integrity: sha512-uHJgbwAMwNFf5mLst7IWLNg14x1CkeqglJb/K3doi4dw6q2IvAAmM/Y81kevy83wP+Sst+nutFTYOGg3d1lsxg==}
-
   gopd@1.0.1:
     resolution: {integrity: sha512-d65bNlIadxvpb/A2abVdlqKqV563juRnZ1Wtk6s1sIR8uNsXR70xqIzVqxVf1eTqDunwT2MkczEeaezCKTZhwA==}
 
@@ -4972,16 +4966,6 @@ packages:
       typescript: '*'
       webpack: ^5.0.0
 
-  tsconfck@3.1.1:
-    resolution: {integrity: sha512-00eoI6WY57SvZEVjm13stEVE90VkEdJAFGgpFLTsZbJyW/LwFQ7uQxJHWpZ2hzSWgCPKc9AnBnNP+0X7o3hAmQ==}
-    engines: {node: ^18 || >=20}
-    hasBin: true
-    peerDependencies:
-      typescript: ^5.0.0
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-
   tslib@2.6.3:
     resolution: {integrity: sha512-xNvxJEOUiWPGhUuUdQgAJPKOOJfGnIyKySOc09XkKsgdUV/3E2zvwZYdejjmRgPCgcym1juLH3226yA7sEFJKQ==}
 
@@ -5100,14 +5084,6 @@ packages:
     peerDependencies:
       vite: '>=4 <=6'
 
-  vite-tsconfig-paths@5.0.1:
-    resolution: {integrity: sha512-yqwv+LstU7NwPeNqajZzLEBVpUFU6Dugtb2P84FXuvaoYA+/70l9MHE+GYfYAycVyPSDYZ7mjOFuYBRqlEpTig==}
-    peerDependencies:
-      vite: '*'
-    peerDependenciesMeta:
-      vite:
-        optional: true
-
   vite@5.4.0:
     resolution: {integrity: sha512-5xokfMX0PIiwCMCMb9ZJcMyh5wbBun0zUzKib+L65vAZ8GY9ePZMXxFrHbr/Kyll2+LSCY7xtERPpxkBDKngwg==}
     engines: {node: ^18.0.0 || >=20.0.0}
@@ -5208,8 +5184,8 @@ packages:
     engines: {node: '>=12.0.0'}
     hasBin: true
 
-  wangsvue@1.4.43:
-    resolution: {integrity: sha512-UYE9EDyLlQMdBTcPexFeO7+PS5pC5+21r7p6ox4uf3rXqxZiuakfmtYZCwj5bcfNJVR0YLkWZjF24SKXq6KyEg==}
+  wangsvue@1.4.54:
+    resolution: {integrity: sha512-B2OMykILqDYwBnsJMk6Nf7pCfrk7+n8JaBtLvHbzUhiohFcb38rkmYohFZgP2GkPTvQNoRzcOkOgMHTmaxdNEQ==}
 
   watchpack@2.4.1:
     resolution: {integrity: sha512-8wrBCMtVhqcXP2Sup1ctSkga6uc2Bx0IIvKyT7yTFier5AXHooSI+QyQQAtTb7+E0IUCCKyTFmXqdqgum2XWGg==}
@@ -8888,8 +8864,6 @@ snapshots:
       merge2: 1.4.1
       slash: 3.0.0
 
-  globrex@0.1.2: {}
-
   gopd@1.0.1:
     dependencies:
       get-intrinsic: 1.2.4
@@ -10801,10 +10775,6 @@ snapshots:
       typescript: 5.5.4
       webpack: 5.93.0
 
-  tsconfck@3.1.1(typescript@5.5.4):
-    optionalDependencies:
-      typescript: 5.5.4
-
   tslib@2.6.3: {}
 
   tunnel-agent@0.6.0:
@@ -10904,17 +10874,6 @@ snapshots:
       vite: 5.4.0(@types/node@22.2.0)(sass@1.77.8)(terser@5.31.5)
     transitivePeerDependencies:
       - supports-color
-
-  vite-tsconfig-paths@5.0.1(typescript@5.5.4)(vite@5.4.0(@types/node@22.2.0)(sass@1.77.8)(terser@5.31.5)):
-    dependencies:
-      debug: 4.3.6(supports-color@8.1.1)
-      globrex: 0.1.2
-      tsconfck: 3.1.1(typescript@5.5.4)
-    optionalDependencies:
-      vite: 5.4.0(@types/node@22.2.0)(sass@1.77.8)(terser@5.31.5)
-    transitivePeerDependencies:
-      - supports-color
-      - typescript
 
   vite@5.4.0(@types/node@22.2.0)(sass@1.77.8)(terser@5.31.5):
     dependencies:
@@ -11060,7 +11019,7 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  wangsvue@1.4.43: {}
+  wangsvue@1.4.54: {}
 
   watchpack@2.4.1:
     dependencies:

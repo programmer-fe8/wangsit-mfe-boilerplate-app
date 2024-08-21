@@ -3,13 +3,11 @@ import { resolve } from 'path';
 
 import vue from '@vitejs/plugin-vue';
 import istanbul from 'vite-plugin-istanbul';
-import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
   root: '.',
   plugins: [
     vue(),
-    tsconfigPaths(),
     istanbul({
       include: 'src/*',
       exclude: [

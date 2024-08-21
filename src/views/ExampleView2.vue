@@ -6,10 +6,10 @@ const { setBreadcrumbs } = useBreadcrumbStore();
 
 const menus = shallowRef([
   {
-    name: 'Home',
+    name: 'Wangs',
   },
   {
-    name: 'Another Tab',
+    name: 'Another Page',
   },
 ]);
 
@@ -18,5 +18,5 @@ onMounted(() => {
 });
 </script>
 <template>
-  <h1>Hello Word from Another Tab</h1>
+  <h1>Hello from Another Tab</h1>
 </template>
