@@ -39,8 +39,8 @@ importers:
         specifier: 4.4.3
         version: 4.4.3(vue@3.4.37(typescript@5.5.4))
       wangsvue:
-        specifier: ^1.4.54
-        version: 1.4.54
+        specifier: ^1.4.57
+        version: 1.4.57
     devDependencies:
       '@cypress/code-coverage':
         specifier: 3.12.44
@@ -5184,8 +5184,8 @@ packages:
     engines: {node: '>=12.0.0'}
     hasBin: true
 
-  wangsvue@1.4.54:
-    resolution: {integrity: sha512-B2OMykILqDYwBnsJMk6Nf7pCfrk7+n8JaBtLvHbzUhiohFcb38rkmYohFZgP2GkPTvQNoRzcOkOgMHTmaxdNEQ==}
+  wangsvue@1.4.57:
+    resolution: {integrity: sha512-Pv745Uv354GWaw/W+f00kcHgQJxnWAdhxk7LXPXZ66ChCxi9z9fZOBYBrq0TWA1I2iy5/X49QdMaX/N70HjnkA==}
 
   watchpack@2.4.1:
     resolution: {integrity: sha512-8wrBCMtVhqcXP2Sup1ctSkga6uc2Bx0IIvKyT7yTFier5AXHooSI+QyQQAtTb7+E0IUCCKyTFmXqdqgum2XWGg==}
@@ -11019,7 +11019,7 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  wangsvue@1.4.54: {}
+  wangsvue@1.4.57: {}
 
   watchpack@2.4.1:
     dependencies:
