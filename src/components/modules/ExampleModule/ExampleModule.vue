@@ -101,7 +101,6 @@ const tableColumns = computed<TableColumn[]>(() => {
 const getTableData = async (
   params: QueryParams,
 ): Promise<FetchResponse<User> | undefined> => {
-  console.log('🚀 ~ params:', params);
   try {
     const { data } = await UserServices.getUsers(params);
 
