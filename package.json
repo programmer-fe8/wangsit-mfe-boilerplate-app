@@ -28,7 +28,7 @@
     "tailwindcss": "3.4.9",
     "vue": "3.4.37",
     "vue-router": "4.4.3",
-    "wangsvue": "^1.4.54"
+    "wangsvue": "^1.4.187"
   },
   "devDependencies": {
     "@cypress/code-coverage": "3.12.44",

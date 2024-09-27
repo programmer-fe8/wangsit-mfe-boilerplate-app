@@ -39,8 +39,8 @@ importers:
         specifier: 4.4.3
         version: 4.4.3(vue@3.4.37(typescript@5.5.4))
       wangsvue:
-        specifier: ^1.4.54
-        version: 1.4.54
+        specifier: ^1.4.187
+        version: 1.4.187
     devDependencies:
       '@cypress/code-coverage':
         specifier: 3.12.44
@@ -4687,6 +4687,10 @@ packages:
     resolution: {integrity: sha512-itJW8lvSA0TXEphiRoawsCksnlf8SyvmFzIhltqAHluXd88pkCd+cXJVHTDwdCr0IzwptSm035IHQktUu1QUMg==}
     engines: {node: '>=0.10.0'}
 
+  source-map-js@1.2.1:
+    resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
+    engines: {node: '>=0.10.0'}
+
   source-map-support@0.5.21:
     resolution: {integrity: sha512-uBHU3L3czsIyYXKX88fdrGovxdSCoTGDRZ6SYXtSRxLZUzHg5P/66Ht6uoUlHu9EZod+inXhKo3qQgwXUT/y1w==}
 
@@ -5184,8 +5188,8 @@ packages:
     engines: {node: '>=12.0.0'}
     hasBin: true
 
-  wangsvue@1.4.54:
-    resolution: {integrity: sha512-B2OMykILqDYwBnsJMk6Nf7pCfrk7+n8JaBtLvHbzUhiohFcb38rkmYohFZgP2GkPTvQNoRzcOkOgMHTmaxdNEQ==}
+  wangsvue@1.4.187:
+    resolution: {integrity: sha512-HieoWE9PtYZoYxUCpltQljnfYqXX+g9gbvKznlzFs1Pt4ydpY86ap6VrL1vx5iGcP4prYPQHiPHpg5BiqEJjiQ==}
 
   watchpack@2.4.1:
     resolution: {integrity: sha512-8wrBCMtVhqcXP2Sup1ctSkga6uc2Bx0IIvKyT7yTFier5AXHooSI+QyQQAtTb7+E0IUCCKyTFmXqdqgum2XWGg==}
@@ -10295,7 +10299,7 @@ snapshots:
     dependencies:
       chokidar: 3.6.0
       immutable: 4.3.7
-      source-map-js: 1.2.0
+      source-map-js: 1.2.1
     optional: true
 
   schema-utils@2.7.0:
@@ -10456,6 +10460,9 @@ snapshots:
       websocket-driver: 0.7.4
 
   source-map-js@1.2.0: {}
+
+  source-map-js@1.2.1:
+    optional: true
 
   source-map-support@0.5.21:
     dependencies:
@@ -11019,7 +11026,7 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  wangsvue@1.4.54: {}
+  wangsvue@1.4.187: {}
 
   watchpack@2.4.1:
     dependencies:
