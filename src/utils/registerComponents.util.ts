@@ -1,6 +1,6 @@
 import { App } from 'vue';
 import { Tooltip, WangsVue, ToastService } from 'wangsvue';
-import { wangsvue } from 'wangsvue-presets';
+import Preset from 'wangsvue-presets/wangsvue';
 
 import router from '@/router';
 
@@ -11,10 +11,10 @@ import 'wangsvue-presets/wangsvue/style.css';
 const registerComponents = (app: App): void => {
   app.use(WangsVue, {
     unstyled: true,
-    pt: wangsvue,
+    pt: Preset,
   });
 
-  app.provide('preset', wangsvue);
+  app.provide('preset', Preset);
 
   app.use(router);
   app.use(ToastService);
