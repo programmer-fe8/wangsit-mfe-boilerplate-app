@@ -1,7 +1,7 @@
-const { defineConfig } = require('@vue/cli-service');
-const { resolve } = require('path');
+import { defineConfig } from '@vue/cli-service';
+import { resolve } from 'path';
 
-module.exports = defineConfig({
+export default defineConfig({
   transpileDependencies: true,
   configureWebpack: {
     output: {

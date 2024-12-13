@@ -113,8 +113,8 @@ const getTableData = async (
 
 <template>
   <ExampleModuleHeader />
-  <ExampleModuleQuickFilter />
   <ExampleModuleTableFilter />
+  <ExampleModuleQuickFilter />
   <DataTable
     :columns="tableColumns"
     :fetch-function="getTableData"
