@@ -1,0 +1,82 @@
+[
+    {
+        "asset": "AC Portable Indoor - 1",
+        "group": "Room 301",
+        "category": "AC",
+        "brand": "LG",
+        "model_type": "Hercules",
+        "alias": "AC ruang rapat"
+    },
+    {
+        "asset": "Meja Lipat - 352",
+        "group": "Room 402",
+        "category": "Furniture",
+        "brand": "Futura",
+        "model_type": "4627",
+        "alias": "-"
+    },
+    {
+        "asset": "AC Portable Standing - 36",
+        "group": "Wirehouse",
+        "category": "AC",
+        "brand": "Samsung",
+        "model_type": "AC030BNPDKC",
+        "alias": "-"
+    },
+    {
+        "asset": "AC Portable Standing - 63",
+        "group": "Head Office A",
+        "category": "AC",
+        "brand": "Samsung",
+        "model_type": "AC030BNPDKC",
+        "alias": "AC Pinjaman"
+    },
+    {
+        "asset": "Microphone - 261",
+        "group": "Garage",
+        "category": "Audio",
+        "brand": "Shure",
+        "model_type": "SVX24E/PG58",
+        "alias": "Mic Acara"
+    },
+    {
+        "asset": "Sound System - 25",
+        "group": "Meeting Room",
+        "category": "Audio",
+        "brand": "JBL",
+        "model_type": "JBL",
+        "alias": "Mic Bluetooth"
+    },
+    {
+        "asset": "Microphone Wireless - 12",
+        "group": "IT Room",
+        "category": "Audio",
+        "brand": "Aiwa",
+        "model_type": "AW 616",
+        "alias": "-"
+    },
+    {
+        "asset": "Microphone - 21",
+        "group": "Room 562",
+        "category": "Audio",
+        "brand": "Shure",
+        "model_type": "SVX24E/PG58",
+        "alias": "Sound Acara"
+    },
+    {
+        "asset": "Sound System - 12",
+        "group": "1st Floor",
+        "category": "Audio",
+        "brand": "JBL",
+        "model_type": "JBL",
+        "alias": "-"
+    },
+    {
+        "asset": "AC Portable Indoor - 87",
+        "group": "Room 301",
+        "category": "Furniture",
+        "brand": "Gree",
+        "model_type": "4627",
+        "alias": "AC untuk Acara"
+    }
+]
