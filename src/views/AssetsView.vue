@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
-import { ButtonFilter, ButtonSearch } from 'wangsvue';
+import { ButtonFilter, ButtonSearch, ButtonDownload } from 'wangsvue';
 import { useBreadcrumbStore } from '@/store';
 import AssetTable from '@/components/common/AssetTable/AssetTable.vue';
 import RegisterForm from '@/components/common/RegisterForm/RegisterForm.vue';
@@ -20,6 +20,7 @@ onMounted(() => {
   <div class="flex justify-end items-center">
     <ButtonSearch class="mr-5" />
     <ButtonFilter class="mr-5" />
+    <ButtonDownload class="mr-5" />
     <RegisterForm />
   </div>
   <AssetTable />

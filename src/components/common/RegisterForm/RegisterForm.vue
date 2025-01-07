@@ -11,8 +11,8 @@ import {
 
 const showForm = shallowRef<boolean>(false);
 const toast = useToast();
-const openToast = (message: string, isError?: boolean): void => {
-  toast.add({ message, error: isError, life: 0 });
+const openToast = (message: string): void => {
+  toast.add({ message, severity: 'success' });
 };
 
 const text = shallowRef('');

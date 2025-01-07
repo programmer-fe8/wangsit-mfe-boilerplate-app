@@ -1,5 +1,6 @@
 [
     {
+        "id": 1,
         "asset": "AC Portable Indoor - 1",
         "group": "Room 301",
         "category": "AC",
@@ -8,6 +9,7 @@
         "alias": "AC ruang rapat"
     },
     {
+        "id": 2,
         "asset": "Meja Lipat - 352",
         "group": "Room 402",
         "category": "Furniture",
@@ -16,6 +18,7 @@
         "alias": "-"
     },
     {
+        "id": 3,
         "asset": "AC Portable Standing - 36",
         "group": "Wirehouse",
         "category": "AC",
@@ -24,6 +27,7 @@
         "alias": "-"
     },
     {
+        "id": 4,
         "asset": "AC Portable Standing - 63",
         "group": "Head Office A",
         "category": "AC",
@@ -32,6 +36,7 @@
         "alias": "AC Pinjaman"
     },
     {
+        "id": 5,
         "asset": "Microphone - 261",
         "group": "Garage",
         "category": "Audio",
@@ -40,6 +45,7 @@
         "alias": "Mic Acara"
     },
     {
+        "id": 6,
         "asset": "Sound System - 25",
         "group": "Meeting Room",
         "category": "Audio",
@@ -48,6 +54,7 @@
         "alias": "Mic Bluetooth"
     },
     {
+        "id": 7,
         "asset": "Microphone Wireless - 12",
         "group": "IT Room",
         "category": "Audio",
@@ -56,6 +63,7 @@
         "alias": "-"
     },
     {
+        "id": 8,
         "asset": "Microphone - 21",
         "group": "Room 562",
         "category": "Audio",
@@ -64,6 +72,7 @@
         "alias": "Sound Acara"
     },
     {
+        "id": 9,
         "asset": "Sound System - 12",
         "group": "1st Floor",
         "category": "Audio",
@@ -72,6 +81,7 @@
         "alias": "-"
     },
     {
+        "id": 10,
         "asset": "AC Portable Indoor - 87",
         "group": "Room 301",
         "category": "Furniture",
