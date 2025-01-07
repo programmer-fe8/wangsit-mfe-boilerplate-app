@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, shallowRef } from 'vue';
 import {
   ButtonDownload,
   ButtonFilter,
@@ -9,6 +9,8 @@ import {
 import { MenuItem } from 'wangsvue/components/menuitem';
 import { Data, TableColumn } from 'wangsvue/components/datatable/DataTable.vue';
 import response from './data/response.json';
+
+const showDialog = shallowRef<boolean>(false);
 
 const tableColumns = computed<TableColumn[]>(() => {
   return [
@@ -57,15 +59,12 @@ const tableColumns = computed<TableColumn[]>(() => {
     <ButtonSearch class="mr-5" />
     <ButtonFilter class="mr-5" />
     <button
-      @click="
-        () => {
-          alert('register');
-        }
-      "
+      @click="showDialog = true"
       class="bg-gray-800 text-white px-4 py-2 rounded-2xl"
     >
       + Register
     </button>
+    <Button />
   </div>
   <DataTable
     :columns="tableColumns"
