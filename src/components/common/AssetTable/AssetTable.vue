@@ -1,11 +1,19 @@
 <script setup lang="ts">
+/*
+ * TODO: Named import dulu, baru default import
+ * Referensi: Coding Style Guide bagian 5.1.2
+ */
 import { computed, shallowRef } from 'vue';
 import { DataTable } from 'wangsvue';
-import { Data, TableColumn } from 'wangsvue/components/datatable/DataTable.vue';
+import { TableColumn } from 'wangsvue/components/datatable/DataTable.vue';
 import response from './data/response.json';
 import { Asset } from '@/types/asset.type';
 import { MenuItem } from 'wangsvue/components/menuitem';
 
+/*
+ * TODO: Perhatiin urutannya, harusnya constant dulu, baru shallowRef, baru computed
+ * Referensi: Coding Style Guide bagian 5.1.2
+ */
 const selectedAsset = shallowRef<Asset>();
 
 const singleItem = computed<MenuItem[]>(() => {
@@ -63,7 +71,7 @@ const tableColumns: TableColumn[] = [
 <template>
   <DataTable
     :columns="tableColumns"
-    :data="response as Data[]"
+    :data="response"
     :options="singleItem"
     @toggle-option="selectedAsset = $event"
     selection-type="none"

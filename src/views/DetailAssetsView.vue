@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { useBreadcrumbStore } from '@/store';
+/*
+ * TODO: Import dulu, baru const
+ * Referensi: Coding Style Guide bagian 5.1.2
+ */
 const { setBreadcrumbs } = useBreadcrumbStore();
 import { Image } from 'wangsvue';
 
@@ -9,6 +13,7 @@ const imagePublicUrl =
 
 const date = new Date();
 
+// TODO: Tambah type BreadcrumbMenu[]
 const menus = [
   {
     name: 'Detail Assets',

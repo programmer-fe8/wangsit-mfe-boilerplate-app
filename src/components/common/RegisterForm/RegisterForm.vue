@@ -1,4 +1,12 @@
 <script setup lang="ts">
+/*
+ * TODO: Seharusnya file ini direname jadi AssetForm dan dipindah ke folder AssetTable,
+ * karena form ini bakal nambahin data ke AssetTable.
+ * Referensi: Coding Style Guide bagian 6.1.2
+ *
+ * Selain itu, folder AssetTable juga seharusnya dipindah ke folder src/components/module.
+ * Referensi: Coding Style Guide bagian 4.2 sama 4.3
+ */
 import { ref, shallowRef, computed } from 'vue';
 import {
   DialogForm,
@@ -15,10 +23,21 @@ const openToast = (message: string): void => {
   toast.add({ message, severity: 'success' });
 };
 
+/*
+ * TODO: Value dari text, selectedName, dan selectedBrand jangan string kosong,
+ * undefined aja, jadi: const text = shallowRef<string>();
+ */
 const text = shallowRef('');
 
+// TODO: Jangan pake ini, pake properti maxLength aja dari komponen InputText
 const invalidState = computed(() => text.value?.length > 10);
 
+/*
+ * TODO: Semua ref di bawah ini ubah jadi constant
+ * Kecuali selectedName sama selectedBrand, yang diubah jadi shallowRef
+ * Semuanya juga ditambah tipe dalam kurung siku <>
+ * Referensi: Coding Style Guide bagian 6.3.2 sama 6.3.3
+ */
 const names = ref([
   {
     label: 'MacBook Pro',
@@ -57,6 +76,8 @@ const modelTypeItems = ref([
 
 <template>
   <Button @click="showForm = true" label="+ Register" severity="secondary" />
+  <!-- TODO: Untuk reset value pas emit close, dibuat jadi fungsi aja, jangan taruh di template.
+   Dan resetnya jangan jadi string kosong, jadi undefined aja, misal: selectedBrand.value = undefined -->
   <DialogForm
     v-model:visible="showForm"
     :buttons-template="['submit', 'cancel', 'clear']"
@@ -73,6 +94,9 @@ const modelTypeItems = ref([
   >
     <template #fields>
       <div class="flex space-x-4 mb-4">
+        <!-- TODO: Daripada di tiap dropdown ada properti option-label sama option-value,
+        pake `v-bind="DropdownProps"` aja, terus buat constant DropdownProps yang isinya
+        properti yang dipake semua Dropdown -->
         <Dropdown
           :options="groupItems"
           class="flex-1"

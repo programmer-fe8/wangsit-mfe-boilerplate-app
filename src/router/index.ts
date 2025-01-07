@@ -19,6 +19,10 @@ const routes: Readonly<RouteRecordRaw[]> = [
       },
       {
         path: 'assets',
+        /*
+         * TODO: Rename Assetsview jadi AssetsView
+         * Referensi: Coding Style Guide bagian 6.6.1
+         */
         name: 'Assetsview',
         component: (): Promise<Component> => import('@/views/AssetsView.vue'),
       },
