@@ -29,6 +29,7 @@ onMounted(() => {
     <div class="flex flex-col ml-6">
       <h3 class="">General Information</h3>
       <div class="grid grid-cols-2">
+        <!-- TODO: Ini sebaiknya pake v-for, yang loop objek -->
         <ul class="text-slate-600 mt-2 mr-10">
           Brand
           <li class="text-base text-black">Daihatsu</li>
