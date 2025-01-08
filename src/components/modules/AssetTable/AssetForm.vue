@@ -146,7 +146,10 @@ const text = shallowRef<string>('');
         />
         <div class="flex flex-1 flex-col">
           <span v-tooltip.top="{ value: badgeTooltip, autoHide: false }">
-            <p>Alias name</p>
+            <p class="mb-1">
+              Alias Name
+              <span class="text-gray-400">(optional)</span>
+            </p>
           </span>
           <InputText
             :mandatory="false"
