@@ -1,8 +1,4 @@
 <script setup lang="ts">
-/*
- * TODO: Ubah nama file ini jadi AssetView.vue, karena nama file harus deskriptif
- * Referensi: Coding Style Guide bagian 6.1.2
- */
 import { onMounted } from 'vue';
 
 import AssetTable from '@/components/modules/AssetTable/AssetTable.vue';

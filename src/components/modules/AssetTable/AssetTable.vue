@@ -15,11 +15,6 @@ import {
 import { Asset } from '@/types/asset.type';
 import { MenuItem } from 'wangsvue/components/menuitem';
 
-/*
- * TODO: Perhatiin urutannya, harusnya constant dulu, baru shallowRef, baru computed
- * Referensi: Coding Style Guide bagian 5.1.2
- */
-
 const tableColumns: TableColumn[] = [
   {
     header: 'Assets',
