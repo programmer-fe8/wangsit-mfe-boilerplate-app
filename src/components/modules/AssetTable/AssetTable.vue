@@ -7,8 +7,11 @@ import { computed, shallowRef } from 'vue';
 
 import response from './data/response.json';
 
-import { DataTable } from 'wangsvue';
-import { TableColumn } from 'wangsvue/components/datatable/DataTable.vue';
+import { Badge, DataTable } from 'wangsvue';
+import {
+  TableCellComponent,
+  TableColumn,
+} from 'wangsvue/components/datatable/DataTable.vue';
 import { Asset } from '@/types/asset.type';
 import { MenuItem } from 'wangsvue/components/menuitem';
 
@@ -29,24 +32,60 @@ const tableColumns: TableColumn[] = [
     fixed: true,
     field: 'group',
     sortable: true,
+    bodyComponent: (data: Asset): TableCellComponent => {
+      return {
+        component: Badge,
+        props: {
+          label: data.group,
+          severity: 'primary',
+        },
+      };
+    },
   },
   {
     header: 'Category',
     fixed: true,
     field: 'category',
     sortable: true,
+    bodyComponent: (data: Asset): TableCellComponent => {
+      return {
+        component: Badge,
+        props: {
+          label: data.category,
+          severity: 'primary',
+        },
+      };
+    },
   },
   {
     header: 'Brand',
     fixed: true,
     field: 'brand',
     sortable: true,
+    bodyComponent: (data: Asset): TableCellComponent => {
+      return {
+        component: Badge,
+        props: {
+          label: data.brand,
+          severity: 'dark',
+        },
+      };
+    },
   },
   {
     header: 'Model/Type',
     fixed: true,
     field: 'model_type',
     sortable: true,
+    bodyComponent: (data: Asset): TableCellComponent => {
+      return {
+        component: Badge,
+        props: {
+          label: data.model_type,
+          severity: 'dark',
+        },
+      };
+    },
   },
   {
     header: 'Alias Name',
