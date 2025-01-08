@@ -36,6 +36,10 @@ const resetValue = (): void => {
   selectedBrand.value = undefined;
 };
 
+const badgeTooltip =
+  'You can input an alias name for convenience in searching for assets\n' +
+  'and to differentiate them from others';
+
 const names = [
   {
     label: 'MacBook Pro',
@@ -141,13 +145,17 @@ const text = shallowRef<string>('');
           validator-message="You must pick a name"
         />
         <div class="flex flex-1 flex-col">
-          <p>Alias name <span class="text-xs">( optional )</span></p>
+          <span v-tooltip.top="{ value: badgeTooltip, autoHide: false }">
+            <p>Alias name</p>
+          </span>
           <InputText
+            :mandatory="false"
             :max-length="30"
             :validator-message="{
               exceed: 'Max length is 30 characters',
             }"
             :value="text"
+            placeholder="Enter alias name"
             use-validator
             v-model:="text"
           />
