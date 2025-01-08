@@ -10,11 +10,9 @@ import { Image } from 'wangsvue';
 import { BreadcrumbMenu } from 'wangsvue/components/breadcrumb/Breadcrumb.vue';
 
 const { setBreadcrumbs } = useBreadcrumbStore();
-
 const imagePublicUrl =
   'https://images.unsplash.com/photo-1723556146809-2dcb7c1e0bf1?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
 const date = new Date();
-
 // TODO: Tambah type BreadcrumbMenu[]
 const menus: BreadcrumbMenu[] = [
   {
@@ -33,5 +31,30 @@ onMounted(() => {
   </div>
   <div class="flex mt-5">
     <Image :src="imagePublicUrl" class="object-cover w-40 h-40" />
+    <div class="flex flex-col ml-6">
+      <h3 class="">General Information</h3>
+      <div class="grid grid-cols-2">
+        <ul class="text-slate-600 mt-2 mr-10">
+          Brand
+          <li class="text-base text-black">Daihatsu</li>
+        </ul>
+        <ul class="text-slate-600 mt-2 mr-10">
+          Model/Type
+          <li class="text-base text-black">Grand Max PU</li>
+        </ul>
+        <ul class="text-slate-600 mt-2 mr-10">
+          Category
+          <li class="text-base text-black">
+            Kendaraan > Mobil > Mobil operasional
+          </li>
+        </ul>
+        <ul class="text-slate-600 mt-2 mr-10">
+          Group
+          <li class="text-base text-black">
+            Kacab 1 > Gedung A > Div Pengadaan
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
