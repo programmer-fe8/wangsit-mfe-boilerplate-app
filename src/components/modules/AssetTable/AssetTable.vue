@@ -4,9 +4,11 @@
  * Referensi: Coding Style Guide bagian 5.1.2
  */
 import { computed, shallowRef } from 'vue';
+
+import response from './data/response.json';
+
 import { DataTable } from 'wangsvue';
 import { TableColumn } from 'wangsvue/components/datatable/DataTable.vue';
-import response from './data/response.json';
 import { Asset } from '@/types/asset.type';
 import { MenuItem } from 'wangsvue/components/menuitem';
 
@@ -14,19 +16,6 @@ import { MenuItem } from 'wangsvue/components/menuitem';
  * TODO: Perhatiin urutannya, harusnya constant dulu, baru shallowRef, baru computed
  * Referensi: Coding Style Guide bagian 5.1.2
  */
-const selectedAsset = shallowRef<Asset>();
-
-const singleItem = computed<MenuItem[]>(() => {
-  return [
-    {
-      label: 'Detail Assets',
-      route: `${selectedAsset.value?.id}/detail-assets`,
-    },
-    {
-      label: 'Edit',
-    },
-  ];
-});
 
 const tableColumns: TableColumn[] = [
   {
@@ -66,6 +55,20 @@ const tableColumns: TableColumn[] = [
     sortable: true,
   },
 ];
+
+const selectedAsset = shallowRef<Asset>();
+
+const singleItem = computed<MenuItem[]>(() => {
+  return [
+    {
+      label: 'Detail Assets',
+      route: `${selectedAsset.value?.id}/detail-assets`,
+    },
+    {
+      label: 'Edit',
+    },
+  ];
+});
 </script>
 
 <template>

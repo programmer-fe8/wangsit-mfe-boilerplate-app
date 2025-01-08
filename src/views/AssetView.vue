@@ -4,13 +4,17 @@
  * Referensi: Coding Style Guide bagian 6.1.2
  */
 import { onMounted } from 'vue';
-import { ButtonFilter, ButtonSearch, ButtonDownload } from 'wangsvue';
+
+import AssetTable from '@/components/modules/AssetTable/AssetTable.vue';
+import AssetForm from '@/components/modules/AssetTable/AssetForm.vue';
+
 import { useBreadcrumbStore } from '@/store';
-import AssetTable from '@/components/common/AssetTable/AssetTable.vue';
-import RegisterForm from '@/components/common/RegisterForm/RegisterForm.vue';
+import { BreadcrumbMenu } from 'wangsvue/components/breadcrumb/Breadcrumb.vue';
+import { ButtonFilter, ButtonSearch, ButtonDownload } from 'wangsvue';
+
 const { setBreadcrumbs } = useBreadcrumbStore();
 
-const menus = [
+const menus: BreadcrumbMenu[] = [
   {
     name: 'Assets',
   },
@@ -20,12 +24,13 @@ onMounted(() => {
   setBreadcrumbs(menus);
 });
 </script>
+
 <template>
   <div class="flex justify-end items-center">
     <ButtonSearch class="mr-5" />
     <ButtonFilter class="mr-5" />
     <ButtonDownload class="mr-5" />
-    <RegisterForm />
+    <AssetForm />
   </div>
   <AssetTable />
 </template>
