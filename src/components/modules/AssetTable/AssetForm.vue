@@ -27,6 +27,7 @@ const openToast = (message: string): void => {
 const resetValue = (): void => {
   selectedName.value = undefined;
   selectedBrand.value = undefined;
+  text.value = '';
 };
 
 const apply = (e: {
