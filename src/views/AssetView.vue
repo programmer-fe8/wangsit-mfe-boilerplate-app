@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 
-import AssetTable from '@/components/modules/AssetTable/AssetTable.vue';
-import AssetForm from '@/components/modules/AssetTable/AssetForm.vue';
-
-import { useBreadcrumbStore } from '@/store';
 import { BreadcrumbMenu } from 'wangsvue/components/breadcrumb/Breadcrumb.vue';
 import { ButtonFilter, ButtonSearch, ButtonDownload } from 'wangsvue';
+import { useBreadcrumbStore } from '@/store';
+
+import AssetTable from '@/components/modules/AssetTable/AssetTable.vue';
+import AssetForm from '@/components/modules/AssetTable/AssetForm.vue';
 
 const { setBreadcrumbs } = useBreadcrumbStore();
 

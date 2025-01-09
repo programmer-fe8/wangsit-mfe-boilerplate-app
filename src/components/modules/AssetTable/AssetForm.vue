@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { shallowRef } from 'vue';
+import { ref, shallowRef } from 'vue';
 
+import { DropdownProps } from 'wangsvue/components/dropdown/Dropdown.vue';
 import {
   DialogForm,
   Dropdown,
@@ -9,8 +10,7 @@ import {
   Button,
   useToast,
 } from 'wangsvue';
-
-import { DropdownProps } from 'wangsvue/components/dropdown/Dropdown.vue';
+import { FormValue } from 'wangsvue/components/form/Form.vue';
 
 const AssetDropdownProps: DropdownProps = {
   optionLabel: 'label',
@@ -23,9 +23,20 @@ const toast = useToast();
 const openToast = (message: string): void => {
   toast.add({ message, severity: 'success' });
 };
+
 const resetValue = (): void => {
   selectedName.value = undefined;
   selectedBrand.value = undefined;
+};
+
+const apply = (e: {
+  formValues: FormValue & { group: string };
+  stayAfterSubmit: boolean;
+}): void => {
+  formValues.value = e.formValues;
+  selectedGroup.value = undefined;
+  setTimeout(() => (selectedGroup.value = e.formValues.group), 0);
+  openToast('asset has been registered successfully');
 };
 
 const badgeTooltip =
@@ -63,11 +74,14 @@ const modelTypeItems = [
   { label: 'Ultra 24', value: 'ultra_24' },
 ];
 
+const selectedGroup = shallowRef<string>();
 const selectedName = shallowRef<string>();
 const selectedBrand = shallowRef<string>();
 
 const showForm = shallowRef<boolean>(false);
 const text = shallowRef<string>('');
+
+const formValues = ref<FormValue>();
 </script>
 
 <template>
@@ -78,7 +92,7 @@ const text = shallowRef<string>('');
     :closable="false"
     @clear="resetValue"
     @close="resetValue"
-    @submit="openToast('asset has been registered successfully')"
+    @submit="apply"
     header="Register Asset"
     severity="danger"
     show-stay-checkbox
@@ -87,6 +101,7 @@ const text = shallowRef<string>('');
     <template #fields>
       <div class="flex space-x-4 mb-4">
         <Dropdown
+          v-model="selectedGroup"
           :options="groupItems"
           v-bind="AssetDropdownProps"
           class="flex-1"

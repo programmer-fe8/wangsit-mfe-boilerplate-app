@@ -5,15 +5,17 @@
  */
 import { computed, shallowRef } from 'vue';
 
-import response from './data/response.json';
-
 import { Badge, DataTable } from 'wangsvue';
 import {
   TableCellComponent,
   TableColumn,
+  FetchResponse,
+  QueryParams,
 } from 'wangsvue/components/datatable/DataTable.vue';
 import { Asset } from '@/types/asset.type';
 import { MenuItem } from 'wangsvue/components/menuitem';
+
+import response from './data/response.json';
 
 const tableColumns: TableColumn[] = [
   {
@@ -90,6 +92,30 @@ const tableColumns: TableColumn[] = [
   },
 ];
 
+const getTableData = async (
+  params: QueryParams,
+): Promise<FetchResponse | undefined> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const startIndex = ((params.page || 1) - 1) * (params.limit || 10); // Default limit to 10 if not provided
+      const endIndex = startIndex + (params.limit || 10);
+
+      const data =
+        params.page !== null && params.limit !== null
+          ? response.slice(startIndex, endIndex)
+          : response;
+
+      resolve({
+        message: '',
+        data: {
+          data,
+          totalRecords: response.length,
+        },
+      });
+    }, 500); // You can adjust the timeout if you need a delay
+  });
+};
+
 const selectedAsset = shallowRef<Asset>();
 
 const singleItem = computed<MenuItem[]>(() => {
@@ -108,7 +134,7 @@ const singleItem = computed<MenuItem[]>(() => {
 <template>
   <DataTable
     :columns="tableColumns"
-    :data="response"
+    :fetch-function="getTableData"
     :options="singleItem"
     @toggle-option="selectedAsset = $event"
     selection-type="none"
