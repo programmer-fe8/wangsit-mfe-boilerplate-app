@@ -1,8 +1,4 @@
 <script setup lang="ts">
-/*
- * TODO: Named import dulu, baru default import
- * Referensi: Coding Style Guide bagian 5.1.2
- */
 import { computed, shallowRef } from 'vue';
 
 import { Badge, DataTable } from 'wangsvue';

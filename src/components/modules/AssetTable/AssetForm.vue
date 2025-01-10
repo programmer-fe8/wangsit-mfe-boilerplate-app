@@ -12,6 +12,16 @@ import {
 } from 'wangsvue';
 import { FormValue } from 'wangsvue/components/form/Form.vue';
 
+/*
+ * TODO: Perhatiin lagi urutannya, harusnya urutannya:
+ * 1. useToast
+ * 2. constant
+ * 3. shallowRef
+ * 4. ref
+ * 5. method
+ *
+ * Referensi: Coding Guide bagian 5.1
+ */
 const AssetDropdownProps: DropdownProps = {
   optionLabel: 'label',
   optionValue: 'value',
@@ -40,6 +50,7 @@ const apply = (e: {
   openToast('asset has been registered successfully');
 };
 
+// TODO: Semua constant di bawah ini ditambahin type
 const badgeTooltip =
   'You can input an alias name for convenience in searching for assets\n' +
   'and to differentiate them from others';
