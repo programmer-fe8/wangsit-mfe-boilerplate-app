@@ -11,17 +11,10 @@ import {
   useToast,
 } from 'wangsvue';
 import { FormValue } from 'wangsvue/components/form/Form.vue';
+import { DropdownOption } from 'wangsvue/types/options.type';
 
-/*
- * TODO: Perhatiin lagi urutannya, harusnya urutannya:
- * 1. useToast
- * 2. constant
- * 3. shallowRef
- * 4. ref
- * 5. method
- *
- * Referensi: Coding Guide bagian 5.1
- */
+const toast = useToast();
+
 const AssetDropdownProps: DropdownProps = {
   optionLabel: 'label',
   optionValue: 'value',
@@ -29,11 +22,53 @@ const AssetDropdownProps: DropdownProps = {
   mandatory: true,
 };
 
-const toast = useToast();
+const badgeTooltip: string =
+  'You can input an alias name for convenience in searching for assets\n' +
+  'and to differentiate them from others';
+
+const names: DropdownOption[] = [
+  {
+    label: 'MacBook Pro',
+    value: 'macbook_pro',
+  },
+];
+
+const groupItems: DropdownOption[] = [
+  { label: 'Room 402', value: 'room_402' },
+  { label: 'Wirehouse', value: 'wirehouse' },
+  { label: 'Garage', value: 'garage' },
+];
+
+const categoryItems: DropdownOption[] = [
+  { label: 'Elektronik', value: 'elektronik' },
+  { label: 'Transportasi', value: 'transportasi' },
+  { label: 'Sanitasi', value: 'sanitasi' },
+];
+
+const brandItems: DropdownOption[] = [
+  { label: 'Samsung', value: 'samsung' },
+  { label: 'Hyundai', value: 'hyundai' },
+  { label: 'Apple', value: 'apple' },
+];
+
+const modelTypeItems: DropdownOption[] = [
+  { label: 'MacBook Pro', value: 'macbook_pro' },
+  { label: 'Asus', value: 'asus' },
+  { label: 'Ultra 24', value: 'ultra_24' },
+];
+
+const selectedGroup = shallowRef<string>();
+const selectedName = shallowRef<string>();
+const selectedBrand = shallowRef<string>();
+
+const showForm = shallowRef<boolean>(false);
+const text = shallowRef<string>('');
+
+const formValues = ref<FormValue>();
+
 const openToast = (message: string): void => {
   toast.add({ message, severity: 'success' });
 };
-
 const resetValue = (): void => {
   selectedName.value = undefined;
   selectedBrand.value = undefined;
@@ -49,55 +84,15 @@ const apply = (e: {
   setTimeout(() => (selectedGroup.value = e.formValues.group), 0);
   openToast('asset has been registered successfully');
 };
-
-// TODO: Semua constant di bawah ini ditambahin type
-const badgeTooltip =
-  'You can input an alias name for convenience in searching for assets\n' +
-  'and to differentiate them from others';
-
-const names = [
-  {
-    label: 'MacBook Pro',
-    value: 'macbook_pro',
-  },
-];
-
-const groupItems = [
-  { label: 'Room 402', value: 'room_402' },
-  { label: 'Wirehouse', value: 'wirehouse' },
-  { label: 'Garage', value: 'garage' },
-];
-
-const categoryItems = [
-  { label: 'Elektronik', value: 'elektronik' },
-  { label: 'Transportasi', value: 'transportasi' },
-  { label: 'Sanitasi', value: 'sanitasi' },
-];
-
-const brandItems = [
-  { label: 'Samsung', value: 'samsung' },
-  { label: 'Hyundai', value: 'hyundai' },
-  { label: 'Apple', value: 'apple' },
-];
-
-const modelTypeItems = [
-  { label: 'MacBook Pro', value: 'macbook_pro' },
-  { label: 'Asus', value: 'asus' },
-  { label: 'Ultra 24', value: 'ultra_24' },
-];
-
-const selectedGroup = shallowRef<string>();
-const selectedName = shallowRef<string>();
-const selectedBrand = shallowRef<string>();
-
-const showForm = shallowRef<boolean>(false);
-const text = shallowRef<string>('');
-
-const formValues = ref<FormValue>();
 </script>
 
 <template>
-  <Button @click="showForm = true" label="+ Register" severity="secondary" />
+  <Button
+    id="btn-dialog-form"
+    @click="showForm = true"
+    label="+ Register"
+    severity="secondary"
+  />
   <DialogForm
     v-model:visible="showForm"
     :buttons-template="['submit', 'cancel', 'clear']"
@@ -113,6 +108,7 @@ const formValues = ref<FormValue>();
     <template #fields>
       <div class="flex space-x-4 mb-4">
         <Dropdown
+          id="group-dropdown"
           v-model="selectedGroup"
           :options="groupItems"
           v-bind="AssetDropdownProps"
@@ -123,6 +119,7 @@ const formValues = ref<FormValue>();
           validator-message="You must pick a group"
         />
         <Dropdown
+          id="category-dropdown"
           :options="categoryItems"
           v-bind="AssetDropdownProps"
           class="flex-1"
@@ -135,6 +132,7 @@ const formValues = ref<FormValue>();
 
       <div class="flex space-x-4 mb-4 items-center">
         <Dropdown
+          id="name-dropdown"
           v-model="selectedName"
           :options="names"
           v-bind="AssetDropdownProps"
@@ -152,6 +150,7 @@ const formValues = ref<FormValue>();
             </p>
           </span>
           <InputText
+            id="alias-name-input-text"
             :mandatory="false"
             :max-length="30"
             :validator-message="{
@@ -167,6 +166,7 @@ const formValues = ref<FormValue>();
 
       <div class="flex space-x-4 mb-4">
         <Dropdown
+          id="brand-dropdown"
           v-model="selectedBrand"
           :disabled="!selectedName"
           :options="brandItems"
@@ -178,6 +178,7 @@ const formValues = ref<FormValue>();
           validator-message="You must pick a brand"
         />
         <Dropdown
+          id="model-type-dropdown"
           :disabled="!selectedBrand"
           :options="modelTypeItems"
           v-bind="AssetDropdownProps"
@@ -190,6 +191,8 @@ const formValues = ref<FormValue>();
       </div>
       <ImageCompressor
         @apply="openToast('asset has been registered successfully')"
+        mandatory
+        use-validator
       />
     </template>
   </DialogForm>
