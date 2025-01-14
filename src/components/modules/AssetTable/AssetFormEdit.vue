@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref, shallowRef } from 'vue';
+import { ref, shallowRef, defineProps } from 'vue';
 
+import { Asset } from '@/types/asset.type';
 import { DropdownProps } from 'wangsvue/components/dropdown/Dropdown.vue';
 import {
   DialogForm,
@@ -11,6 +12,8 @@ import {
 } from 'wangsvue';
 import { FormValue } from 'wangsvue/components/form/Form.vue';
 import { DropdownOption } from 'wangsvue/types/options.type';
+
+const props = defineProps<{ asset: Asset }>();
 
 const toast = useToast();
 
@@ -56,7 +59,7 @@ const modelTypeItems: DropdownOption[] = [
   { label: 'Ultra 24', value: 'ultra_24' },
 ];
 
-const showForm = shallowRef<boolean>(false);
+const showEditForm = shallowRef<boolean>(false);
 const selectedGroup = shallowRef<string>();
 const selectedName = shallowRef<string>();
 const selectedBrand = shallowRef<string>();
@@ -86,13 +89,13 @@ const apply = (e: {
 
 <template>
   <DialogForm
-    v-model:visible="showForm"
+    v-model:visible="showEditForm"
     :buttons-template="['submit', 'cancel', 'clear']"
     :closable="false"
     @clear="resetValue"
     @close="resetValue"
     @submit="apply"
-    header="Register Asset"
+    header="Edit Asset"
     severity="danger"
     show-stay-checkbox
     width="xlarge"
@@ -102,6 +105,7 @@ const apply = (e: {
         <Dropdown
           id="group-dropdown"
           v-model="selectedGroup"
+          :initial-value="props.asset.group"
           :options="groupItems"
           v-bind="AssetDropdownProps"
           class="flex-1"
@@ -112,6 +116,7 @@ const apply = (e: {
         />
         <Dropdown
           id="category-dropdown"
+          :initial-value="props.asset.category"
           :options="categoryItems"
           v-bind="AssetDropdownProps"
           class="flex-1"
@@ -126,6 +131,7 @@ const apply = (e: {
         <Dropdown
           id="name-dropdown"
           v-model="selectedName"
+          :initial-value="props.asset.asset"
           :options="names"
           v-bind="AssetDropdownProps"
           class="flex-1"
@@ -145,6 +151,7 @@ const apply = (e: {
             id="alias-name-input-text"
             :mandatory="false"
             :max-length="30"
+            :model-value="props.asset.alias"
             :v-model="text"
             :validator-message="{
               exceed: 'Max length is 30 characters',
@@ -160,7 +167,7 @@ const apply = (e: {
         <Dropdown
           id="brand-dropdown"
           v-model="selectedBrand"
-          :disabled="!selectedName"
+          :initial-value="props.asset.brand"
           :options="brandItems"
           v-bind="AssetDropdownProps"
           class="flex-1"
@@ -171,7 +178,7 @@ const apply = (e: {
         />
         <Dropdown
           id="model-type-dropdown"
-          :disabled="!selectedBrand"
+          :initial-value="props.asset.model_type"
           :options="modelTypeItems"
           v-bind="AssetDropdownProps"
           class="flex-1"

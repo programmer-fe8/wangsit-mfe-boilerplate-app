@@ -11,6 +11,7 @@ import {
 import { Asset } from '@/types/asset.type';
 import { MenuItem } from 'wangsvue/components/menuitem';
 
+import AssetFormEdit from './AssetFormEdit.vue';
 import response from './data/response.json';
 
 const tableColumns: TableColumn[] = [
@@ -88,6 +89,24 @@ const tableColumns: TableColumn[] = [
   },
 ];
 
+const selectedAsset = shallowRef<Asset>();
+const showEditForm = shallowRef<boolean>(false);
+
+const singleItem = computed<MenuItem[]>(() => {
+  return [
+    {
+      label: 'Detail Assets',
+      route: `${selectedAsset.value?.id}/detail-assets`,
+    },
+    {
+      label: 'Edit',
+      command: (): void => {
+        showEditForm.value = true;
+      },
+    },
+  ];
+});
+
 const getTableData = async (
   params: QueryParams,
 ): Promise<FetchResponse | undefined> => {
@@ -111,28 +130,16 @@ const getTableData = async (
     }, 500); // You can adjust the timeout if you need a delay
   });
 };
-
-const selectedAsset = shallowRef<Asset>();
-
-const singleItem = computed<MenuItem[]>(() => {
-  return [
-    {
-      label: 'Detail Assets',
-      route: `${selectedAsset.value?.id}/detail-assets`,
-    },
-    {
-      label: 'Edit',
-    },
-  ];
-});
 </script>
 
 <template>
+  <AssetFormEdit v-model:visible="showEditForm" :asset="selectedAsset" />
   <DataTable
     :columns="tableColumns"
     :fetch-function="getTableData"
     :options="singleItem"
     @toggle-option="selectedAsset = $event"
+    scrollable
     selection-type="none"
     use-paginator
   />
