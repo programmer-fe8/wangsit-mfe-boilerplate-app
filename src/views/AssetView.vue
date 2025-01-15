@@ -7,6 +7,7 @@ import { useBreadcrumbStore } from '@/store';
 
 import AssetForm from '@/components/modules/AssetTable/AssetForm.vue';
 import AssetTable from '@/components/modules/AssetTable/AssetTable.vue';
+import { Asset } from '@/types/asset.type';
 
 const { setBreadcrumbs } = useBreadcrumbStore();
 
@@ -17,6 +18,7 @@ const menus: BreadcrumbMenu[] = [
 ];
 
 const showForm = shallowRef(false);
+const selectedAsset = shallowRef<Asset>();
 
 onMounted(() => {
   setBreadcrumbs(menus);
@@ -30,11 +32,19 @@ onMounted(() => {
     <ButtonDownload class="mr-5" />
     <Button
       id="btn-dialog-form"
-      @click="showForm = true"
+      @click="
+        showForm = true;
+        selectedAsset = undefined;
+      "
       label="+ Register"
       severity="secondary"
     />
   </div>
-  <AssetForm v-model:visible="showForm" />
-  <AssetTable />
+  <AssetForm v-model:visible="showForm" :asset="selectedAsset" />
+  <AssetTable
+    @edit-asset="
+      showForm = true;
+      selectedAsset = $event;
+    "
+  />
 </template>

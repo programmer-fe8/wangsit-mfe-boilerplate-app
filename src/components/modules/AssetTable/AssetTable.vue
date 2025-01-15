@@ -11,8 +11,11 @@ import {
 import { Asset } from '@/types/asset.type';
 import { MenuItem } from 'wangsvue/components/menuitem';
 
-import AssetFormEdit from './AssetFormEdit.vue';
 import response from './data/response.json';
+
+const emit = defineEmits<{
+  editAsset: [asset: Asset];
+}>();
 
 const tableColumns: TableColumn[] = [
   {
@@ -90,7 +93,6 @@ const tableColumns: TableColumn[] = [
 ];
 
 const selectedAsset = shallowRef<Asset>();
-const showEditForm = shallowRef<boolean>(false);
 
 const singleItem = computed<MenuItem[]>(() => {
   return [
@@ -101,7 +103,7 @@ const singleItem = computed<MenuItem[]>(() => {
     {
       label: 'Edit',
       command: (): void => {
-        showEditForm.value = true;
+        emit('editAsset', selectedAsset.value as Asset);
       },
     },
   ];
@@ -133,7 +135,6 @@ const getTableData = async (
 </script>
 
 <template>
-  <AssetFormEdit v-model:visible="showEditForm" :asset="selectedAsset" />
   <DataTable
     :columns="tableColumns"
     :fetch-function="getTableData"

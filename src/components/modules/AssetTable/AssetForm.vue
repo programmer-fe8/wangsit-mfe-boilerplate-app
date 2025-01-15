@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, shallowRef } from 'vue';
 
+import { Asset } from '@/types/asset.type';
 import { DropdownProps } from 'wangsvue/components/dropdown/Dropdown.vue';
 import {
   DialogForm,
@@ -11,6 +12,8 @@ import {
 } from 'wangsvue';
 import { FormValue } from 'wangsvue/components/form/Form.vue';
 import { DropdownOption } from 'wangsvue/types/options.type';
+
+const props = defineProps<{ asset?: Asset }>();
 
 const toast = useToast();
 
@@ -69,10 +72,19 @@ const openToast = (message: string): void => {
 };
 const resetValue = (): void => {
   selectedName.value = undefined;
+  selectedGroup.value = undefined;
   selectedBrand.value = undefined;
   text.value = '';
 };
 
+const addValue = (): void => {
+  if (props.asset) {
+    selectedBrand.value = props.asset.brand;
+    selectedGroup.value = props.asset.group;
+    selectedName.value = props.asset.asset;
+    text.value = props.asset.alias;
+  }
+};
 const apply = (e: {
   formValues: FormValue & { group: string };
   stayAfterSubmit: boolean;
@@ -89,10 +101,11 @@ const apply = (e: {
     v-model:visible="showForm"
     :buttons-template="['submit', 'cancel', 'clear']"
     :closable="false"
+    :header="asset ? 'Edit Asset' : 'Register Asset'"
     @clear="resetValue"
     @close="resetValue"
+    @show="addValue"
     @submit="apply"
-    header="Register Asset"
     severity="danger"
     show-stay-checkbox
     width="xlarge"
@@ -102,6 +115,7 @@ const apply = (e: {
         <Dropdown
           id="group-dropdown"
           v-model="selectedGroup"
+          :initial-value="props.asset?.group"
           :options="groupItems"
           v-bind="AssetDropdownProps"
           class="flex-1"
@@ -112,6 +126,7 @@ const apply = (e: {
         />
         <Dropdown
           id="category-dropdown"
+          :initial-value="props.asset?.category"
           :options="categoryItems"
           v-bind="AssetDropdownProps"
           class="flex-1"
@@ -126,6 +141,7 @@ const apply = (e: {
         <Dropdown
           id="name-dropdown"
           v-model="selectedName"
+          :initial-value="props.asset?.asset"
           :options="names"
           v-bind="AssetDropdownProps"
           class="flex-1"
@@ -145,6 +161,7 @@ const apply = (e: {
             id="alias-name-input-text"
             :mandatory="false"
             :max-length="30"
+            :model-value="props.asset?.alias"
             :v-model="text"
             :validator-message="{
               exceed: 'Max length is 30 characters',
@@ -161,6 +178,7 @@ const apply = (e: {
           id="brand-dropdown"
           v-model="selectedBrand"
           :disabled="!selectedName"
+          :initial-value="props.asset?.brand"
           :options="brandItems"
           v-bind="AssetDropdownProps"
           class="flex-1"
@@ -172,6 +190,7 @@ const apply = (e: {
         <Dropdown
           id="model-type-dropdown"
           :disabled="!selectedBrand"
+          :initial-value="props.asset?.model_type"
           :options="modelTypeItems"
           v-bind="AssetDropdownProps"
           class="flex-1"
