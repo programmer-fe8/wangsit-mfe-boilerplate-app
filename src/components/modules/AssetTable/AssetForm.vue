@@ -10,8 +10,10 @@ import {
   ImageCompressor,
   useToast,
 } from 'wangsvue';
-import { FormValue } from 'wangsvue/components/form/Form.vue';
 import { DropdownOption } from 'wangsvue/types/options.type';
+import { FormValue } from 'wangsvue/components/form/Form.vue';
+
+import AssetServices from '@/services/assets.service';
 
 const props = defineProps<{ asset?: Asset }>();
 
@@ -81,18 +83,36 @@ const addValue = (): void => {
   if (props.asset) {
     selectedBrand.value = props.asset.brand;
     selectedGroup.value = props.asset.group;
-    selectedName.value = props.asset.asset;
-    text.value = props.asset.alias;
+    selectedName.value = props.asset.name;
+    text.value = props.asset.aliasName;
   }
 };
-const apply = (e: {
-  formValues: FormValue & { group: string };
+const apply = async (e: {
+  formValues: FormValue & Asset;
   stayAfterSubmit: boolean;
-}): void => {
-  formValues.value = e.formValues;
-  selectedGroup.value = undefined;
-  setTimeout(() => (selectedGroup.value = e.formValues.group), 0);
-  openToast('asset has been registered successfully');
+}): Promise<void> => {
+  try {
+    // Make a selected group option retain its previous value after submission when the checkbox is active.
+    formValues.value = e.formValues;
+    selectedGroup.value = undefined;
+    setTimeout(() => (selectedGroup.value = e.formValues.group), 0);
+
+    // Create or update asset
+    const assetData = {
+      ...e.formValues,
+    };
+
+    // If there's an asset ID, update it, otherwise create a new asset
+    if (props.asset?._id) {
+      await AssetServices.editAsset(props.asset._id, assetData as Asset);
+      openToast('Asset has been updated successfully');
+    } else {
+      await AssetServices.createAsset(assetData as Asset);
+      openToast('Asset has been registered successfully');
+    }
+  } catch (error) {
+    console.error(error);
+  }
 };
 </script>
 
@@ -102,7 +122,6 @@ const apply = (e: {
     :buttons-template="['submit', 'cancel', 'clear']"
     :closable="false"
     :header="asset ? 'Edit Asset' : 'Register Asset'"
-    @clear="resetValue"
     @close="resetValue"
     @show="addValue"
     @submit="apply"
@@ -141,7 +160,7 @@ const apply = (e: {
         <Dropdown
           id="name-dropdown"
           v-model="selectedName"
-          :initial-value="props.asset?.asset"
+          :initial-value="props.asset?.name"
           :options="names"
           v-bind="AssetDropdownProps"
           class="flex-1"
@@ -161,12 +180,13 @@ const apply = (e: {
             id="alias-name-input-text"
             :mandatory="false"
             :max-length="30"
-            :model-value="props.asset?.alias"
+            :model-value="props.asset?.aliasName"
             :v-model="text"
             :validator-message="{
               exceed: 'Max length is 30 characters',
             }"
             :value="text"
+            field-name="aliasName"
             placeholder="Enter alias name"
             use-validator
           />
@@ -190,11 +210,11 @@ const apply = (e: {
         <Dropdown
           id="model-type-dropdown"
           :disabled="!selectedBrand"
-          :initial-value="props.asset?.model_type"
+          :initial-value="props.asset?.model"
           :options="modelTypeItems"
           v-bind="AssetDropdownProps"
           class="flex-1"
-          field-name="model_type"
+          field-name="model"
           label="Model/Type"
           placeholder="Select model/type"
           validator-message="You must pick a model/type"
@@ -202,7 +222,7 @@ const apply = (e: {
       </div>
       <ImageCompressor
         @apply="openToast('asset has been registered successfully')"
-        mandatory
+        field-name="assetImage"
         use-validator
       />
     </template>

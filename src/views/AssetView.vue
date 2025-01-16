@@ -29,7 +29,7 @@ onMounted(() => {
   <div class="flex justify-end items-center">
     <ButtonSearch class="mr-5" />
     <ButtonFilter class="mr-5" />
-    <ButtonDownload class="mr-5" />
+    <ButtonDownload class="mr-5" file-name="Download" />
     <Button
       id="btn-dialog-form"
       @click="
@@ -45,6 +45,7 @@ onMounted(() => {
     @edit-asset="
       showForm = true;
       selectedAsset = $event;
+      console.log($event);
     "
   />
 </template>

@@ -1,9 +1,14 @@
 export interface Asset {
-  id: number;
-  asset: string;
-  group: string;
+  _id: number;
   category: string;
   brand: string;
-  model_type: string;
-  alias: string;
+  model: string;
+  group: string;
+  aliasName: string;
+  name: string;
+  assetImage: string;
+  assetNumber: number;
+  userFirstName: string;
+  createdAt: Date;
+  updatedAt: Date;
 }

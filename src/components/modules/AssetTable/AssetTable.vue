@@ -11,7 +11,7 @@ import {
 import { Asset } from '@/types/asset.type';
 import { MenuItem } from 'wangsvue/components/menuitem';
 
-import response from './data/response.json';
+import AssetServices from '@/services/assets.service';
 
 const emit = defineEmits<{
   editAsset: [asset: Asset];
@@ -21,7 +21,7 @@ const tableColumns: TableColumn[] = [
   {
     header: 'Assets',
     fixed: true,
-    field: 'asset',
+    field: 'name',
     sortable: true,
   },
   {
@@ -78,7 +78,7 @@ const tableColumns: TableColumn[] = [
       return {
         component: Badge,
         props: {
-          label: data.model_type,
+          label: data.model,
           severity: 'dark',
         },
       };
@@ -87,7 +87,7 @@ const tableColumns: TableColumn[] = [
   {
     header: 'Alias Name',
     fixed: true,
-    field: 'alias',
+    field: 'aliasName',
     sortable: true,
   },
 ];
@@ -98,7 +98,7 @@ const singleItem = computed<MenuItem[]>(() => {
   return [
     {
       label: 'Detail Assets',
-      route: `${selectedAsset.value?.id}/detail-assets`,
+      route: `${selectedAsset.value?._id}/detail-assets`,
     },
     {
       label: 'Edit',
@@ -112,25 +112,12 @@ const singleItem = computed<MenuItem[]>(() => {
 const getTableData = async (
   params: QueryParams,
 ): Promise<FetchResponse | undefined> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const startIndex = ((params.page || 1) - 1) * (params.limit || 10); // Default limit to 10 if not provided
-      const endIndex = startIndex + (params.limit || 10);
-
-      const data =
-        params.page !== null && params.limit !== null
-          ? response.slice(startIndex, endIndex)
-          : response;
-
-      resolve({
-        message: '',
-        data: {
-          data,
-          totalRecords: response.length,
-        },
-      });
-    }, 500); // You can adjust the timeout if you need a delay
-  });
+  try {
+    const { data } = await AssetServices.getAssetsData(params);
+    return data;
+  } catch (error) {
+    console.error('Error fetching assets:', error);
+  }
 };
 </script>
 

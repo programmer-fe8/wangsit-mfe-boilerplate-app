@@ -1,92 +1,137 @@
-[
-    {
-        "id": 1,
-        "asset": "AC Portable Indoor - 1",
-        "group": "Room 301",
-        "category": "AC",
-        "brand": "LG",
-        "model_type": "Hercules",
-        "alias": "AC ruang rapat"
+{
+    "data": {
+        "totalRecords": 9,
+        "data": [
+            {
+                "_id": "67871af63365b424a291c602",
+                "category": "Accessories",
+                "brand": "AudioKing",
+                "model": "GH7.1",
+                "group": "Gaming",
+                "aliasName": "headset_audioking",
+                "name": "Gaming Headset 7.1",
+                "assetImage": "C:\\Users\\Jason Sutanto\\learning-kit\\uploaded-files\\assets\\1736907510-small.jpg",
+                "assetNumber": 1,
+                "userFirstName": "",
+                "createdAt": "2025-01-15T02:18:30.091Z",
+                "updatedAt": "2025-01-15T02:18:30.091Z"
+            },
+            {
+                "_id": "67871aac3365b424a291c600",
+                "category": "Electronics",
+                "brand": "TechX",
+                "model": "Pro15-2024",
+                "group": "Office",
+                "aliasName": "laptop_techx",
+                "name": "Laptop Pro 15",
+                "assetImage": "C:\\Users\\Jason Sutanto\\learning-kit\\uploaded-files\\assets\\1736907436-small.jpg",
+                "assetNumber": 1,
+                "userFirstName": "",
+                "createdAt": "2025-01-15T02:17:16.683Z",
+                "updatedAt": "2025-01-15T02:17:16.683Z"
+            },
+            {
+                "_id": "67871ad23365b424a291c601",
+                "category": "Smartphones",
+                "brand": "MobileSphere",
+                "model": "Max10-2024",
+                "group": "Personal",
+                "aliasName": "smartphone_max",
+                "name": "Smartphone Max 10",
+                "assetImage": "C:\\Users\\Jason Sutanto\\learning-kit\\uploaded-files\\assets\\1736907474-small.jpg",
+                "assetNumber": 1,
+                "userFirstName": "",
+                "createdAt": "2025-01-15T02:17:54.096Z",
+                "updatedAt": "2025-01-15T02:17:54.096Z"
+            },
+            {
+                "_id": "67871b203365b424a291c603",
+                "category": "Televisions",
+                "brand": "VisionMaster",
+                "model": "UHD50-2025",
+                "group": "Living room",
+                "aliasName": "tv_visionmaster",
+                "name": "Ultra HD TV 50",
+                "assetImage": "C:\\Users\\Jason Sutanto\\learning-kit\\uploaded-files\\assets\\1736907552-small.jpg",
+                "assetNumber": 1,
+                "userFirstName": "",
+                "createdAt": "2025-01-15T02:19:12.535Z",
+                "updatedAt": "2025-01-15T02:19:12.535Z"
+            },
+            {
+                "_id": "67871b4d3365b424a291c604",
+                "category": "Peripherals",
+                "brand": "Periphio",
+                "model": "MouseX5",
+                "group": "Office",
+                "aliasName": "mouse_periphio",
+                "name": "Wireless Mouse X5",
+                "assetImage": "C:\\Users\\Jason Sutanto\\learning-kit\\uploaded-files\\assets\\1736907597-small.jpg",
+                "assetNumber": 1,
+                "userFirstName": "",
+                "createdAt": "2025-01-15T02:19:57.464Z",
+                "updatedAt": "2025-01-15T02:19:57.464Z"
+            },
+            {
+                "_id": "678766c10020fb467e3291c8",
+                "category": "Peripherals",
+                "brand": "Periphio",
+                "model": "MouseX5",
+                "group": "Office",
+                "aliasName": "mouse_periphio",
+                "name": "Wireless Mouse X5",
+                "assetImage": "C:\\Users\\Jason Sutanto\\learning-kit\\uploaded-files\\assets\\1736926913-small.jpg",
+                "assetNumber": 2,
+                "userFirstName": "",
+                "createdAt": "2025-01-15T07:41:53.987Z",
+                "updatedAt": "2025-01-15T07:41:53.987Z"
+            },
+            {
+                "_id": "678766ee0020fb467e3291c9",
+                "category": "Peripherals",
+                "brand": "Periphio",
+                "model": "MouseX5",
+                "group": "Office",
+                "aliasName": "mouse_periphio",
+                "name": "Wireless Mouse X5",
+                "assetImage": "C:\\Users\\Jason Sutanto\\learning-kit\\uploaded-files\\assets\\1736926958-small.jpg",
+                "assetNumber": 3,
+                "userFirstName": "",
+                "createdAt": "2025-01-15T07:42:38.366Z",
+                "updatedAt": "2025-01-15T07:42:38.366Z"
+            },
+            {
+                "_id": "6787682a59d6623265d52b64",
+                "category": "Peripherals",
+                "brand": "Periphio",
+                "model": "MouseX5",
+                "group": "Office",
+                "aliasName": "mouse_periphio",
+                "name": "Wireless Mouse X5",
+                "assetImage": "C:\\Users\\Jason Sutanto\\learning-kit\\uploaded-files\\assets\\1736927274-small.jpg",
+                "assetImage2": "C:\\Users\\Jason Sutanto\\learning-kit\\uploaded-files\\assets\\1736927274-small.jpg",
+                "assetNumber": 4,
+                "userFirstName": "",
+                "createdAt": "2025-01-15T07:47:54.495Z",
+                "updatedAt": "2025-01-15T07:47:54.495Z"
+            },
+            {
+                "_id": "6787685559d6623265d52b65",
+                "category": "Peripherals",
+                "brand": "Periphio",
+                "model": "MouseX5",
+                "group": "Office",
+                "aliasName": "mouse_periphio",
+                "name": "Wireless Mouse X5",
+                "assetImage": "C:\\Users\\Jason Sutanto\\learning-kit\\uploaded-files\\assets\\1736927317-small.jpg",
+                "assetImage2": "C:\\Users\\Jason Sutanto\\learning-kit\\uploaded-files\\assets\\1736927317-small.jpg",
+                "assetNumber": 5,
+                "userFirstName": "",
+                "createdAt": "2025-01-15T07:48:37.971Z",
+                "updatedAt": "2025-01-15T07:48:37.971Z"
+            }
+        ]
     },
-    {
-        "id": 2,
-        "asset": "Meja Lipat - 352",
-        "group": "Room 402",
-        "category": "Furniture",
-        "brand": "Futura",
-        "model_type": "4627",
-        "alias": "-"
-    },
-    {
-        "id": 3,
-        "asset": "AC Portable Standing - 36",
-        "group": "Wirehouse",
-        "category": "AC",
-        "brand": "Samsung",
-        "model_type": "AC030BNPDKC",
-        "alias": "-"
-    },
-    {
-        "id": 4,
-        "asset": "AC Portable Standing - 63",
-        "group": "Head Office A",
-        "category": "AC",
-        "brand": "Samsung",
-        "model_type": "AC030BNPDKC",
-        "alias": "AC Pinjaman"
-    },
-    {
-        "id": 5,
-        "asset": "Microphone - 261",
-        "group": "Garage",
-        "category": "Audio",
-        "brand": "Shure",
-        "model_type": "SVX24E/PG58",
-        "alias": "Mic Acara"
-    },
-    {
-        "id": 6,
-        "asset": "Sound System - 25",
-        "group": "Meeting Room",
-        "category": "Audio",
-        "brand": "JBL",
-        "model_type": "JBL",
-        "alias": "Mic Bluetooth"
-    },
-    {
-        "id": 7,
-        "asset": "Microphone Wireless - 12",
-        "group": "IT Room",
-        "category": "Audio",
-        "brand": "Aiwa",
-        "model_type": "AW 616",
-        "alias": "-"
-    },
-    {
-        "id": 8,
-        "asset": "Microphone - 21",
-        "group": "Room 562",
-        "category": "Audio",
-        "brand": "Shure",
-        "model_type": "SVX24E/PG58",
-        "alias": "Sound Acara"
-    },
-    {
-        "id": 9,
-        "asset": "Sound System - 12",
-        "group": "1st Floor",
-        "category": "Audio",
-        "brand": "JBL",
-        "model_type": "JBL",
-        "alias": "-"
-    },
-    {
-        "id": 10,
-        "asset": "AC Portable Indoor - 87",
-        "group": "Room 301",
-        "category": "Furniture",
-        "brand": "Gree",
-        "model_type": "4627",
-        "alias": "AC untuk Acara"
-    }
-]
+    "message": "Successful retrieve all asset data",
+    "status": 200
+}
