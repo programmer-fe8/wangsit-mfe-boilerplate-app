@@ -8,4 +8,5 @@ export interface AssetQueryParams {
   limit?: number;
   sortOrder?: 1 | -1;
   sortBy?: string;
+  _id?: string;
 }
