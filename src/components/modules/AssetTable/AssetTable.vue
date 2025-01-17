@@ -1,21 +1,27 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue';
 
-import { Badge, DataTable } from 'wangsvue';
+import { Asset } from '@/types/asset.type';
+import { assetFilterFields } from './options/assetFilter';
 import {
+  Badge,
+  Button,
+  ButtonFilter,
+  ButtonSearch,
+  DataTable,
+  Icon,
+  FilterContainer,
+} from 'wangsvue';
+import {
+  FetchResponse,
   TableCellComponent,
   TableColumn,
-  FetchResponse,
   QueryParams,
 } from 'wangsvue/components/datatable/DataTable.vue';
-import { Asset } from '@/types/asset.type';
 import { MenuItem } from 'wangsvue/components/menuitem';
 
+import AssetForm from './AssetForm.vue';
 import AssetServices from '@/services/assets.service';
-
-const emit = defineEmits<{
-  editAsset: [asset: Asset];
-}>();
 
 const tableColumns: TableColumn[] = [
   {
@@ -29,60 +35,29 @@ const tableColumns: TableColumn[] = [
     fixed: true,
     field: 'group',
     sortable: true,
-    bodyComponent: (data: Asset): TableCellComponent => {
-      return {
-        component: Badge,
-        props: {
-          label: data.group,
-          severity: 'primary',
-        },
-      };
-    },
+    bodyComponent: (data: Asset) => createBadgeCell(data, 'group', 'primary'),
   },
   {
     header: 'Category',
     fixed: true,
     field: 'category',
     sortable: true,
-    bodyComponent: (data: Asset): TableCellComponent => {
-      return {
-        component: Badge,
-        props: {
-          label: data.category,
-          severity: 'primary',
-        },
-      };
-    },
+    bodyComponent: (data: Asset) =>
+      createBadgeCell(data, 'category', 'primary'),
   },
   {
     header: 'Brand',
     fixed: true,
     field: 'brand',
     sortable: true,
-    bodyComponent: (data: Asset): TableCellComponent => {
-      return {
-        component: Badge,
-        props: {
-          label: data.brand,
-          severity: 'dark',
-        },
-      };
-    },
+    bodyComponent: (data: Asset) => createBadgeCell(data, 'brand', 'dark'),
   },
   {
     header: 'Model/Type',
     fixed: true,
     field: 'model_type',
     sortable: true,
-    bodyComponent: (data: Asset): TableCellComponent => {
-      return {
-        component: Badge,
-        props: {
-          label: data.model,
-          severity: 'dark',
-        },
-      };
-    },
+    bodyComponent: (data: Asset) => createBadgeCell(data, 'model', 'dark'),
   },
   {
     header: 'Alias Name',
@@ -93,6 +68,8 @@ const tableColumns: TableColumn[] = [
 ];
 
 const selectedAsset = shallowRef<Asset>();
+const showForm = shallowRef(false);
+const showFilter = shallowRef(false);
 
 const singleItem = computed<MenuItem[]>(() => {
   return [
@@ -104,14 +81,14 @@ const singleItem = computed<MenuItem[]>(() => {
     {
       label: 'Edit',
       icon: 'edit',
-
       command: (): void => {
-        emit('editAsset', selectedAsset.value as Asset);
+        showForm.value = true;
       },
     },
   ];
 });
 
+// Fetching Data
 const getTableData = async (
   params: QueryParams,
 ): Promise<FetchResponse | undefined> => {
@@ -122,9 +99,42 @@ const getTableData = async (
     console.error(error);
   }
 };
+
+const createBadgeCell = (
+  data: Asset,
+  field: keyof Asset,
+  severity: 'primary' | 'dark',
+): TableCellComponent => ({
+  component: Badge,
+  props: {
+    label: data[field],
+    severity,
+  },
+});
 </script>
 
 <template>
+  <div class="flex justify-end items-center">
+    <ButtonSearch class="mr-5" />
+    <ButtonFilter v-model:show-filter="showFilter" class="mr-6" />
+    <Icon
+      class="scale-[200%] mr-7"
+      icon="file-history"
+      info="Change Log"
+      tooltip-pos="bottom"
+    />
+    <Button
+      id="btn-dialog-form"
+      @click="
+        showForm = true;
+        selectedAsset = undefined;
+      "
+      label="+ Register"
+      severity="secondary"
+    />
+  </div>
+  <FilterContainer v-show="showFilter" :fields="assetFilterFields" />
+  <AssetForm v-model:visible="showForm" :asset="selectedAsset" />
   <DataTable
     :columns="tableColumns"
     :fetch-function="getTableData"

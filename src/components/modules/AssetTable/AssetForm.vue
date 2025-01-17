@@ -19,16 +19,16 @@ const props = defineProps<{ asset?: Asset }>();
 
 const toast = useToast();
 
+const badgeTooltip: string =
+  'You can input an alias name for convenience in searching for assets\n' +
+  'and to differentiate them from others';
+
 const AssetDropdownProps: DropdownProps = {
   optionLabel: 'label',
   optionValue: 'value',
   useValidator: true,
   mandatory: true,
 };
-
-const badgeTooltip: string =
-  'You can input an alias name for convenience in searching for assets\n' +
-  'and to differentiate them from others';
 
 const names: DropdownOption[] = [
   {

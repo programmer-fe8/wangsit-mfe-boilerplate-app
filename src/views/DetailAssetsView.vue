@@ -2,10 +2,10 @@
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
-import { BreadcrumbMenu } from 'wangsvue/components/breadcrumb/Breadcrumb.vue';
-import { Image } from 'wangsvue';
-import { useBreadcrumbStore } from '@/store';
 import { Asset } from '@/types/asset.type';
+import { BreadcrumbMenu } from 'wangsvue/components/breadcrumb/Breadcrumb.vue';
+import { useBreadcrumbStore } from '@/store';
+import { Image } from 'wangsvue';
 
 import AssetServices from '@/services/assets.service';
 
