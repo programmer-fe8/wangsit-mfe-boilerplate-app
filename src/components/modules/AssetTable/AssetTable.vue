@@ -98,10 +98,13 @@ const singleItem = computed<MenuItem[]>(() => {
   return [
     {
       label: 'Detail Assets',
+      icon: 'file-copy-2-line',
       route: `${selectedAsset.value?._id}/detail-assets`,
     },
     {
       label: 'Edit',
+      icon: 'edit',
+
       command: (): void => {
         emit('editAsset', selectedAsset.value as Asset);
       },
@@ -116,7 +119,7 @@ const getTableData = async (
     const { data } = await AssetServices.getAssetsData(params);
     return data;
   } catch (error) {
-    console.error('Error fetching assets:', error);
+    console.error(error);
   }
 };
 </script>

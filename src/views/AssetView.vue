@@ -2,7 +2,7 @@
 import { onMounted, shallowRef } from 'vue';
 
 import { BreadcrumbMenu } from 'wangsvue/components/breadcrumb/Breadcrumb.vue';
-import { Button, ButtonFilter, ButtonSearch, ButtonDownload } from 'wangsvue';
+import { Button, ButtonFilter, ButtonSearch, Icon } from 'wangsvue';
 import { useBreadcrumbStore } from '@/store';
 
 import AssetForm from '@/components/modules/AssetTable/AssetForm.vue';
@@ -28,8 +28,14 @@ onMounted(() => {
 <template>
   <div class="flex justify-end items-center">
     <ButtonSearch class="mr-5" />
-    <ButtonFilter class="mr-5" />
-    <ButtonDownload class="mr-5" file-name="Download" />
+    <ButtonFilter class="mr-6" />
+
+    <Icon
+      class="scale-[200%] mr-7"
+      icon="file-history"
+      info="Change Log"
+      tooltip-pos="bottom"
+    />
     <Button
       id="btn-dialog-form"
       @click="
@@ -45,7 +51,6 @@ onMounted(() => {
     @edit-asset="
       showForm = true;
       selectedAsset = $event;
-      console.log($event);
     "
   />
 </template>

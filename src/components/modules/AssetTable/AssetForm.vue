@@ -69,9 +69,6 @@ const text = shallowRef<string>('');
 
 const formValues = ref<FormValue>();
 
-const openToast = (message: string): void => {
-  toast.add({ message, severity: 'success' });
-};
 const resetValue = (): void => {
   selectedName.value = undefined;
   selectedGroup.value = undefined;
@@ -102,13 +99,36 @@ const apply = async (e: {
       ...e.formValues,
     };
 
-    // If there's an asset ID, update it, otherwise create a new asset
     if (props.asset?._id) {
-      await AssetServices.editAsset(props.asset._id, assetData as Asset);
-      openToast('Asset has been updated successfully');
+      try {
+        await AssetServices.editAsset(props.asset._id, assetData as Asset);
+        toast.add({
+          severity: 'success',
+          message: 'asset has been registered.',
+        });
+      } catch (error) {
+        console.error(error);
+        toast.add({
+          error,
+          message:
+            'failed to register asset. Please check your connection and try again.',
+        });
+      }
     } else {
-      await AssetServices.createAsset(assetData as Asset);
-      openToast('Asset has been registered successfully');
+      try {
+        await AssetServices.createAsset(assetData as Asset);
+        toast.add({
+          severity: 'success',
+          message: 'asset has been edited.',
+        });
+      } catch (error) {
+        console.error(error);
+        toast.add({
+          error,
+          message:
+            'failed to edit asset. Please check your connection and try again.',
+        });
+      }
     }
   } catch (error) {
     console.error(error);
@@ -220,11 +240,7 @@ const apply = async (e: {
           validator-message="You must pick a model/type"
         />
       </div>
-      <ImageCompressor
-        @apply="openToast('asset has been registered successfully')"
-        field-name="assetImage"
-        use-validator
-      />
+      <ImageCompressor field-name="assetImage" use-validator />
     </template>
   </DialogForm>
 </template>

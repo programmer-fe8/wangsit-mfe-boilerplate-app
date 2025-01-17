@@ -34,11 +34,11 @@ const AssetServices = {
     return API({ params }).get('/v2/assets');
   },
 
-  createAsset: (data: Asset): Promise<AxiosResponse<Asset>> => {
+  createAsset: (data: Asset): Promise<AxiosResponse> => {
     return API().post('/v2/assets', data);
   },
 
-  editAsset: (id: number, data: Asset): Promise<AxiosResponse<Asset>> => {
+  editAsset: (id: number, data: Asset): Promise<AxiosResponse> => {
     return API().put(`/v2/assets/${id}`, data);
   },
 };
