@@ -116,6 +116,10 @@ const getTableData = async (
     const { data } = await AssetServices.getAssetsData(params);
     return data;
   } catch (error) {
+    /*
+     * TODO: Biasanya kalau di proyek, cuma console.error(error) aja,
+     * gak perlu message tambahan
+     */
     console.error('Error fetching assets:', error);
   }
 };

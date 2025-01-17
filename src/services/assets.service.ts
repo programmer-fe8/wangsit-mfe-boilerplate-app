@@ -34,6 +34,10 @@ const AssetServices = {
     return API({ params }).get('/v2/assets');
   },
 
+  /*
+   * TODO: Ini jadi Promise<AxiosResponse> aja
+   * Kalau kamu liat responsenya, dia harusnya cuma ada kode status berhasil
+   */
   createAsset: (data: Asset): Promise<AxiosResponse<Asset>> => {
     return API().post('/v2/assets', data);
   },

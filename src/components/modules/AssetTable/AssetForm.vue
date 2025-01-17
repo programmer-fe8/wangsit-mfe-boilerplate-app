@@ -69,6 +69,7 @@ const text = shallowRef<string>('');
 
 const formValues = ref<FormValue>();
 
+// TODO: Function ini hapus aja
 const openToast = (message: string): void => {
   toast.add({ message, severity: 'success' });
 };
@@ -105,6 +106,7 @@ const apply = async (e: {
     // If there's an asset ID, update it, otherwise create a new asset
     if (props.asset?._id) {
       await AssetServices.editAsset(props.asset._id, assetData as Asset);
+      // TODO: Tiap kalu mau buka toast, pake toast.add
       openToast('Asset has been updated successfully');
     } else {
       await AssetServices.createAsset(assetData as Asset);

@@ -45,6 +45,7 @@ onMounted(() => {
     @edit-asset="
       showForm = true;
       selectedAsset = $event;
+      // TODO: Hapus console.log
       console.log($event);
     "
   />
