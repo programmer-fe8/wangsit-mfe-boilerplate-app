@@ -140,13 +140,17 @@ const apply = async (e: {
   <DialogForm
     v-model:visible="showForm"
     :buttons-template="['submit', 'cancel', 'clear']"
+    :clear-btn-label="props.asset ? 'Reset Field' : 'Clear Field'"
     :closable="false"
     :header="asset ? 'Edit Asset' : 'Register Asset'"
+    :show-stay-checkbox="props.asset ? false : true"
     @close="resetValue"
     @show="addValue"
     @submit="apply"
+    cancel-btn-label="Cancel"
     severity="danger"
-    show-stay-checkbox
+    stay-checkbox-label="Stay on this after submiting"
+    submit-btn-label="Create"
     width="xlarge"
   >
     <template #fields>
@@ -240,7 +244,12 @@ const apply = async (e: {
           validator-message="You must pick a model/type"
         />
       </div>
-      <ImageCompressor field-name="assetImage" use-validator />
+      <ImageCompressor
+        :image-preview-url="props.asset?.assetImage"
+        :mandatory="props.asset ? false : true"
+        field-name="assetImage"
+        use-validator
+      />
     </template>
   </DialogForm>
 </template>
