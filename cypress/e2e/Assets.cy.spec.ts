@@ -1,4 +1,4 @@
-describe.only('Asset Table Test', () => {
+describe('AssetTable Test', () => {
   beforeEach(() => {
     cy.intercept('GET', '**/v2/assets*', { fixture: 'assets.json' }).as(
       'getAssets',
@@ -8,6 +8,13 @@ describe.only('Asset Table Test', () => {
 
   it('should display correct data from API in the table', () => {
     cy.wait('@getAssets');
+  });
+
+  it('should display detail and edit options in the datatable', () => {
+    cy.wait('@getAssets');
+    cy.getSection('singleactionwrapper').eq(3).click();
+    cy.get('#single-action-menu').contains('Detail').should('be.visible');
+    cy.get('#single-action-menu').contains('Edit').should('be.visible');
   });
 
   it('should visit detail asset page when click detail action in datatable', () => {
@@ -28,7 +35,7 @@ describe.only('Asset Table Test', () => {
   });
 });
 
-describe('Asset Form Create Test', () => {
+describe('AssetForm Create Test', () => {
   beforeEach(() => {
     cy.visit('/assets');
 
