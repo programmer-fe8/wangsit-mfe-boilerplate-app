@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted, computed, shallowRef } from 'vue';
+
 import { useRoute } from 'vue-router';
 
 import { Asset } from '@/types/asset.type';
@@ -9,17 +10,18 @@ import { Image } from 'wangsvue';
 
 import AssetServices from '@/services/assets.service';
 
-/*
- * TODO: Perhatiin lagi urutannya, onMounted dimana, router dimana, dll
- * Referensi: Coding Guide bagian 5.1
- */
-
-const { setBreadcrumbs } = useBreadcrumbStore();
-const imagePublicUrl: string =
-  'https://images.unsplash.com/photo-1723556146809-2dcb7c1e0bf1?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+onMounted(async () => {
+  setBreadcrumbs(menus);
+  await getAssetData();
+});
 
 const route = useRoute();
+
+const { setBreadcrumbs } = useBreadcrumbStore();
 const paramId = route.params.assetId;
+
+const imagePublicUrl: string =
+  'https://images.unsplash.com/photo-1723556146809-2dcb7c1e0bf1?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
 
 const menus: BreadcrumbMenu[] = [
   {
@@ -28,69 +30,74 @@ const menus: BreadcrumbMenu[] = [
 ];
 
 // TODO: Pake shallowRef, karena properti dalam objek gak bakal diubah
-const assetInfo = ref<Asset>();
+const assetInfo = shallowRef<Asset>();
 
-onMounted(async () => {
-  setBreadcrumbs(menus);
-  // TODO: Jangan define function dalam onMounted
-  const getAssetData = async (): Promise<void> => {
-    try {
-      const {
-        data: {
-          data: { data },
-        },
-      } = await AssetServices.getAssetsData({
-        _id: `${JSON.stringify([paramId])}`,
-      });
-      assetInfo.value = data[0];
-    } catch (error) {
-      console.error(error);
-    }
+const assetDetails = computed(() => {
+  return {
+    brand: {
+      label: 'Brand',
+      value: assetInfo.value?.brand,
+    },
+    model: {
+      label: 'Model',
+      value: assetInfo.value?.model,
+    },
+    category: {
+      label: 'Category',
+      value: assetInfo.value?.category,
+    },
+    group: {
+      label: 'Group',
+      value: assetInfo.value?.group,
+    },
   };
-  await getAssetData();
 });
+
+const getAssetData = async (): Promise<void> => {
+  try {
+    const {
+      data: {
+        data: { data },
+      },
+    } = await AssetServices.getAssetsData({
+      _id: paramId as string,
+    });
+    assetInfo.value = data[0];
+  } catch (error) {
+    console.error(error);
+  }
+};
 </script>
-<template>
-  <!-- TODO: Tambahin template v-if="assetInfo", jadi cuma ditampilin kalau udah dapet data -->
+<template v-if="assetInfo">
   <div class="flex justify-between">
     <h2 class="text-sm">{{ assetInfo?.name }}</h2>
     <div class="flex flex-col text-right">
       <p>Last Modified</p>
       <p class="mt-1">
         {{ assetInfo?.updatedAt }} by
-        <!-- TODO: Ubah yang di bawah ini jadi pake Nullish Coalescing Operator (coba cari cara pakenya) -->
-        {{ assetInfo?.userFirstName ? assetInfo?.userFirstName : '.....' }}
+        {{ assetInfo?.userFirstName ?? '....' }}
       </p>
     </div>
   </div>
   <div class="flex">
-    <!-- TODO: Yang di bawah ini bakal selalu jadi imagePublicUrl,
-     ubah jadi Nullish Coalescing Operator. Yang kayak gini
-     (salah satu value bisa undefined) selalu pake nullish
-     operator, jangan pake or. -->
     <Image
-      :src="imagePublicUrl || assetInfo?.assetImage"
+      :src="assetInfo?.assetImage ?? imagePublicUrl"
       class="object-cover w-40 h-40"
     />
     <div class="flex flex-col ml-6">
       <h3 class="">General Information</h3>
       <div class="grid grid-cols-2">
-        <!-- TODO: Pake v-for, kayak sebelumnya -->
-        <ul class="text-slate-600 mt-2 mr-10">
-          Brand
-          <li class="text-base text-black">{{ assetInfo?.brand }}</li>
-        </ul>
-        <ul class="text-slate-600 mt-2 mr-10">
-          Model/Type
-          <li class="text-base text-black">{{ assetInfo?.model }}</li>
-        </ul>
-        <ul class="text-slate-600 mt-2 mr-10">
-          Category
-          <li class="text-base text-black">{{ assetInfo?.category }}</li>
-        </ul>
-        <ul class="text-slate-600 mt-2 mr-10">
-          Group
-          <li class="text-base text-black">{{ assetInfo?.group }}</li>
+        <ul
+          :key="asset.value"
+          v-for="asset in assetDetails"
+          class="text-slate-600 mt-2 mr-10"
+        >
+          {{
+            asset.label
+          }}
+          <li class="text-base text-black">
+            {{ asset.value }}
+          </li>
         </ul>
       </div>
     </div>
