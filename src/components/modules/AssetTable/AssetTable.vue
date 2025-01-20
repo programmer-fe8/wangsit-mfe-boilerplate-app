@@ -134,6 +134,8 @@ const createBadgeCell = (
     />
   </div>
   <FilterContainer v-show="showFilter" :fields="assetFilterFields" />
+  <!-- TODO: Dialog selalu taruh di paling bawah template, kalau kayak
+   gini seakan-akan formnya ada di antara filter container sama tabel -->
   <AssetForm v-model:visible="showForm" :asset="selectedAsset" />
   <DataTable
     :columns="tableColumns"
