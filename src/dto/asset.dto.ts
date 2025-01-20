@@ -10,3 +10,11 @@ export interface AssetQueryParams {
   sortBy?: string;
   _id?: string;
 }
+
+export interface AssetOptionQueryParams {
+  brandOptions?: boolean;
+  nameOptions?: boolean;
+  categoryOptions?: boolean;
+  modelOptions?: boolean;
+  groupOptions?: boolean;
+}

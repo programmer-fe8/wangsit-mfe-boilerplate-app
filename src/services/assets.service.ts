@@ -1,8 +1,9 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { getBaseURL } from '@/utils/getBaseURL.util';
 import { FetchResponse } from 'wangsvue/components/datatable/DataTable.vue';
+import { FetchOptionResponse } from 'wangsvue/components/filtercontainer/FilterContainer.vue';
 import { Asset } from '@/types/asset.type';
-import { AssetQueryParams } from '@/dto/asset.dto';
+import { AssetQueryParams, AssetOptionQueryParams } from '@/dto/asset.dto';
 
 const API = ({ headers = {}, params = {} } = {}): AxiosInstance => {
   const user = JSON.parse(localStorage.getItem('user') ?? '{}');
@@ -32,6 +33,12 @@ const AssetServices = {
     params?: AssetQueryParams,
   ): Promise<AxiosResponse<FetchResponse<Asset>>> => {
     return API({ params }).get('/v2/assets');
+  },
+
+  getAssetOptions: (
+    params?: AssetOptionQueryParams,
+  ): Promise<AxiosResponse<FetchOptionResponse>> => {
+    return API({ params }).get('/v2/assets/options');
   },
 
   createAsset: (data: Asset): Promise<AxiosResponse> => {
