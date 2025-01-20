@@ -246,9 +246,7 @@ const apply = async (e: {
       </div>
       <ImageCompressor
         :image-preview-url="props.asset?.assetImage"
-        :mandatory="props.asset ? false : true"
         field-name="assetImage"
-        use-validator
       />
     </template>
   </DialogForm>
