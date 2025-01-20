@@ -45,7 +45,7 @@ const AssetServices = {
     return API().post('/v2/assets', data);
   },
 
-  editAsset: (id: number, data: Asset): Promise<AxiosResponse> => {
+  editAsset: (id: string, data: Asset): Promise<AxiosResponse> => {
     return API().put(`/v2/assets/${id}`, data);
   },
 };

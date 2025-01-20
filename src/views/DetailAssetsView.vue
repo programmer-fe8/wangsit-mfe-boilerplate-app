@@ -29,7 +29,6 @@ const menus: BreadcrumbMenu[] = [
   },
 ];
 
-// TODO: Pake shallowRef, karena properti dalam objek gak bakal diubah
 const assetInfo = shallowRef<Asset>();
 
 const assetDetails = computed(() => {

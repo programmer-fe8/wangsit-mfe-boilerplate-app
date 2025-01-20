@@ -1,5 +1,5 @@
 export interface Asset {
-  _id: number;
+  _id: string;
   category: string;
   brand: string;
   model: string;
