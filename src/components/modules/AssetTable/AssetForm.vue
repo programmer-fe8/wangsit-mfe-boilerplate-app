@@ -104,21 +104,6 @@ const apply = async (e: {
         await AssetServices.editAsset(props.asset._id, assetData as Asset);
         toast.add({
           severity: 'success',
-          message: 'asset has been registered.',
-        });
-      } catch (error) {
-        console.error(error);
-        toast.add({
-          error,
-          message:
-            'failed to register asset. Please check your connection and try again.',
-        });
-      }
-    } else {
-      try {
-        await AssetServices.createAsset(assetData as Asset);
-        toast.add({
-          severity: 'success',
           message: 'asset has been edited.',
         });
       } catch (error) {
@@ -127,6 +112,21 @@ const apply = async (e: {
           error,
           message:
             'failed to edit asset. Please check your connection and try again.',
+        });
+      }
+    } else {
+      try {
+        await AssetServices.createAsset(assetData as Asset);
+        toast.add({
+          severity: 'success',
+          message: 'asset has been registered.',
+        });
+      } catch (error) {
+        console.error(error);
+        toast.add({
+          error,
+          message:
+            'failed to registered asset. Please check your connection and try again.',
         });
       }
     }

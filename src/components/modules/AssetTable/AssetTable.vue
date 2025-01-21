@@ -8,8 +8,8 @@ import {
   Button,
   ButtonFilter,
   ButtonSearch,
+  Changelog,
   DataTable,
-  Icon,
   FilterContainer,
 } from 'wangsvue';
 import {
@@ -117,11 +117,10 @@ const createBadgeCell = (
   <div class="flex justify-end items-center">
     <ButtonSearch class="mr-5" />
     <ButtonFilter v-model:show-filter="showFilter" class="mr-6" />
-    <Icon
-      class="scale-[200%] mr-7"
-      icon="file-history"
-      info="Change Log"
-      tooltip-pos="bottom"
+    <Changelog
+      header="Changelog"
+      object="selectedAsset"
+      table-name="normal-changelog"
     />
     <Button
       id="btn-dialog-form"
@@ -129,6 +128,7 @@ const createBadgeCell = (
         showForm = true;
         selectedAsset = undefined;
       "
+      class="ml-5"
       label="+ Register"
       severity="secondary"
     />
