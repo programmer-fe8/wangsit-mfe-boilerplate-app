@@ -62,6 +62,7 @@ const modelTypeItems: DropdownOption[] = [
 ];
 
 const showForm = shallowRef<boolean>(false);
+const imageHasChanges = shallowRef<boolean>(false);
 const selectedGroup = shallowRef<string>();
 const selectedName = shallowRef<string>();
 const selectedBrand = shallowRef<string>();
@@ -69,6 +70,7 @@ const text = shallowRef<string>('');
 
 const formValues = ref<FormValue>();
 
+// Resets the form values to their initial state
 const resetValue = (): void => {
   selectedName.value = undefined;
   selectedGroup.value = undefined;
@@ -76,6 +78,7 @@ const resetValue = (): void => {
   text.value = '';
 };
 
+// Pre-fills the form with existing asset data if available
 const addValue = (): void => {
   if (props.asset) {
     selectedBrand.value = props.asset.brand;
@@ -84,6 +87,8 @@ const addValue = (): void => {
     text.value = props.asset.aliasName;
   }
 };
+
+// Handles form submission for creating or updating an asset
 const apply = async (e: {
   formValues: FormValue & Asset;
   stayAfterSubmit: boolean;
@@ -99,8 +104,40 @@ const apply = async (e: {
       ...e.formValues,
     };
 
+    // Check if the props asset has an _id property (indicating it's an edit)
     if (props.asset?._id) {
       try {
+        // Check if the form has any changes
+        let formHasChanges = false;
+        const fieldsToCheck: (keyof Asset)[] = [
+          'group',
+          'category',
+          'name',
+          'aliasName',
+          'brand',
+          'model',
+        ];
+
+        for (const field of fieldsToCheck) {
+          if (props.asset[field] !== assetData[field]) {
+            formHasChanges = true;
+          }
+        }
+
+        if (imageHasChanges.value) {
+          formHasChanges = true;
+        }
+
+        // If the form has no changes, just show a toast message 'No changes detected.'
+        if (!formHasChanges) {
+          toast.add({
+            severity: 'info',
+            message: 'No changes detected.',
+          });
+          return;
+        }
+
+        // If the form has changes, update the asset
         await AssetServices.editAsset(props.asset._id, assetData as Asset);
         toast.add({
           severity: 'success',
@@ -115,6 +152,7 @@ const apply = async (e: {
         });
       }
     } else {
+      // If the props asset doesn't have an _id, it's a new asset
       try {
         await AssetServices.createAsset(assetData as Asset);
         toast.add({
@@ -246,6 +284,7 @@ const apply = async (e: {
       </div>
       <ImageCompressor
         :image-preview-url="props.asset?.assetImage"
+        @update:default-image="imageHasChanges = true"
         field-name="assetImage"
       />
     </template>
