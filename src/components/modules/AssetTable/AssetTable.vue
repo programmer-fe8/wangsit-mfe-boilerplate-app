@@ -134,13 +134,15 @@ const createBadgeCell = (
     />
   </div>
   <FilterContainer v-show="showFilter" :fields="assetFilterFields" />
+
   <DataTable
     :columns="tableColumns"
     :fetch-function="getTableData"
     :options="singleItem"
     @toggle-option="selectedAsset = $event"
     scrollable
-    selection-type="none"
+    selection-type="checkbox"
+    table-name="asset-list"
     use-paginator
   />
   <AssetForm v-model:visible="showForm" :asset="selectedAsset" />

@@ -9,34 +9,38 @@ import { Button, InputText, InputPassword } from 'wangsvue';
     >
       <h1 class="text-md font-extralight mb-[20px]">Login</h1>
       <div class="flex flex-col w-full gap-3">
-        <div>
-          <InputText
-            id="alias-name-input-text"
-            :max-length="30"
-            :validator-message="{
-              exceed: 'Max length is 30 characters',
-            }"
-            label="Email"
-            mandatory
-            placeholder="Enter your email"
-            use-validator
+        <form class="flex flex-col w-full gap-3">
+          <div>
+            <InputText
+              id="alias-name-input-text"
+              :validator-message="{
+                exceed: 'Please enter your email and try again',
+              }"
+              label="Email"
+              mandatory
+              placeholder="Enter your email"
+              type="email"
+              use-validator
+            />
+          </div>
+          <div>
+            <InputPassword
+              label="Password"
+              mandatory
+              placeholder="Enter your password"
+              validator-message="Please enter your password and try again"
+            />
+          </div>
+          <Button
+            id="btn-login-form"
+            class="w-full my-[32px]"
+            label="Login"
+            severity="secondary"
+            size="large"
+            type="submit"
           />
-        </div>
-        <div>
-          <InputPassword
-            label="Password"
-            mandatory
-            placeholder="Enter your password"
-          />
-        </div>
+        </form>
       </div>
-      <Button
-        id="btn-login-form"
-        class="w-full my-[32px]"
-        label="Login"
-        severity="secondary"
-        size="large"
-      />
     </div>
   </div>
 </template>

@@ -19,7 +19,7 @@ const routes: Readonly<RouteRecordRaw[]> = [
       },
       {
         path: 'assets',
-        name: 'AssetsView',
+        name: 'Assetsview',
         component: (): Promise<Component> => import('@/views/AssetView.vue'),
       },
       {
@@ -27,6 +27,21 @@ const routes: Readonly<RouteRecordRaw[]> = [
         name: 'DetailAssetsview',
         component: (): Promise<Component> =>
           import('@/views/DetailAssetsView.vue'),
+      },
+      {
+        path: 'customfield',
+        name: 'CustomFieldview',
+        redirect: '/customfield/global',
+        component: (): Promise<Component> =>
+          import('@/views/CustomFieldView.vue'),
+        children: [
+          {
+            path: ':type(global|specific)',
+            name: 'CustomFieldSpecificview',
+            component: (): Promise<Component> =>
+              import('@/components/modules/CustomField/CustomFieldTable.vue'),
+          },
+        ],
       },
     ],
   },

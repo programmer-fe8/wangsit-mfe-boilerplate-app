@@ -1,0 +1,99 @@
+{
+    "data": {
+        "totalRecords": 10,
+        "data": [
+            {
+                "_id": "1",
+                "active": true,
+                "fieldName": "Warna",
+                "dataType": "Dropdown",
+                "value": ["Biru", "Hijau", "Kuning", "Merah", "Putih"],
+                "required": true,
+                "itemName": ["Lemari", "TV", "Meja", "Piring"]
+            },
+            {
+                "_id": "2",
+                "active": true,
+                "fieldName": "Warna",
+                "dataType": "Dropdown",
+                "value": ["Hitam", "Abu-abu", "Hijau"],
+                "required": false,
+                "itemName": ["Meja", "Laptop", "Panci"]
+            },
+            {
+                "_id": "3",
+                "active": true,
+                "fieldName": "Warna",
+                "dataType": "Dropdown",
+                "value": ["Biru", "Kuning", "Oranye"],
+                "required": true,
+                "itemName": ["Pintu", "Pendingin", "Kursi"]
+            },
+            {
+                "_id": "4",
+                "active": true,
+                "fieldName": "Nomor",
+                "dataType": "Text",
+                "value": [],
+                "required": true,
+                "itemName": ["AC Standing", "Sound"]
+            },
+            {
+                "_id": "5",
+                "active": true,
+                "fieldName": "Nomor",
+                "dataType": "Text",
+                "value": [],
+                "required": true,
+                "itemName": ["AC Portable Indoor", "Sound"]
+            },
+            {
+                "_id": "6",
+                "active": false,
+                "fieldName": "Deskripsi",
+                "dataType": "Text Area",
+                "value": [],
+                "required": false,
+                "itemName": ["Mesin Ketik", "Sound"]
+            },
+            {
+                "_id": "7",
+                "active": false,
+                "fieldName": "Deskripsi",
+                "dataType": "Text Area",
+                "value": [],
+                "required": false,
+                "itemName": ["Mouse", "Sound"]
+            },
+            {
+                "_id": "8",
+                "active": true,
+                "fieldName": "Keterangan",
+                "dataType": "Text",
+                "value": [],
+                "required": true,
+                "itemName": ["Monitor", "Sound"]
+            },
+            {
+                "_id": "9",
+                "active": true,
+                "fieldName": "Keterangan",
+                "dataType": "Text",
+                "value": [],
+                "required": false,
+                "itemName": ["Kursi", "Pendingin"]
+            },
+            {
+                "_id": "10",
+                "active": true,
+                "fieldName": "Keterangan",
+                "dataType": "Text",
+                "value": [],
+                "required": false,
+                "itemName": ["Laptop", "Sound"]
+            }
+        ]
+    },
+    "message": "Success",
+    "status": 200
+}
