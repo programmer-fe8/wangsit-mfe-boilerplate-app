@@ -1,21 +1,23 @@
 <script setup lang="ts">
-import { computed, ref, shallowRef } from 'vue';
+import { computed, shallowRef } from 'vue';
 
+import { useRoute } from 'vue-router';
 import { MenuItem } from 'wangsvue/components/menuitem';
-
+import { BadgeGroup, DataTable, DialogConfirm } from 'wangsvue';
+import { CustomField } from '@/types/customfield.type';
 import {
   FetchResponse,
   TableColumn,
   TableCellComponent,
+  QueryParams,
 } from 'wangsvue/components/datatable/DataTable.vue';
-
-import { BadgeGroup, DataTable, DialogConfirm } from 'wangsvue';
-
-import { CustomField } from '@/types/customfield.type';
 
 import CustomFieldHeader from './CustomFieldHeader.vue';
 import CustomFieldFilter from './CustomFieldFilter.vue';
 import CustomFieldForm from './CustomFieldForm.vue';
+import CustomFieldService from '@/services/customfield.service';
+
+const route = useRoute();
 
 const fieldSingleAction: MenuItem[] = [
   {
@@ -29,98 +31,93 @@ const fieldSingleAction: MenuItem[] = [
     label: 'Delete',
     icon: 'delete-bin',
     danger: true,
+    command: (): void => {
+      showDeleteDialog.value = true;
+    },
   },
 ];
 
-// TODO: Ini jadi const aja
-const fieldTableColumn = computed<TableColumn[]>(() => {
-  return [
-    {
-      field: 'active',
-      header: 'Active',
-      sortable: true,
-      fixed: true,
-      preset: {
-        type: 'toggle',
-        confirmDialogProps: {
-          header: 'Test',
-          severity: 'danger',
-          listLabel: 'fieldName',
+const fieldTableColumn: TableColumn[] = [
+  {
+    field: 'active',
+    header: 'Active',
+    sortable: true,
+    fixed: true,
+    preset: {
+      type: 'toggle',
+      confirmDialogProps: {
+        header: 'Test',
+        severity: 'danger',
+        listLabel: 'fieldName',
+      },
+    },
+  },
+  {
+    field: 'fieldName',
+    header: 'Field Name',
+    sortable: true,
+    fixed: true,
+  },
+  {
+    field: 'dataType',
+    header: 'Data Type',
+    sortable: true,
+  },
+  {
+    field: 'value',
+    header: 'Value',
+    sortable: true,
+    bodyComponent: (data: CustomField): TableCellComponent => {
+      return {
+        component: BadgeGroup,
+        props: {
+          labels: data.value || [],
+          limit: 2,
+          severity: 'primary',
         },
-      },
+      };
     },
-    {
-      field: 'fieldName',
-      header: 'Field Name',
-      sortable: true,
-      fixed: true,
+  },
+  {
+    field: 'required',
+    header: 'Required',
+    sortable: true,
+  },
+  {
+    field: 'itemName',
+    header: 'Item Name',
+    sortable: true,
+    bodyComponent: (data: CustomField): TableCellComponent => {
+      return {
+        component: BadgeGroup,
+        props: {
+          labels: data.itemName,
+          limit: 2,
+          severity: 'primary',
+        },
+      };
     },
-    {
-      field: 'dataType',
-      header: 'Data Type',
-      sortable: true,
-      fixed: true,
-    },
-    {
-      field: 'value',
-      header: 'Value',
-      sortable: true,
-      fixed: true,
-      bodyComponent: (data: CustomField): TableCellComponent => {
-        return {
-          component: BadgeGroup,
-          props: {
-            labels: data.value,
-            limit: 2,
-            severity: 'primary',
-          },
-        };
-      },
-    },
-    {
-      field: 'required',
-      header: 'Required',
-      sortable: true,
-      fixed: true,
-    },
-    {
-      field: 'itemName',
-      header: 'Item Name',
-      sortable: true,
-      fixed: true,
-      bodyComponent: (data: CustomField): TableCellComponent => {
-        return {
-          component: BadgeGroup,
-          props: {
-            labels: data.itemName,
-            limit: 2,
-            severity: 'primary',
-          },
-        };
-      },
-    },
-  ];
-});
+  },
+];
+
+const isActiveDialog = shallowRef<boolean>();
 
 const showDialog = shallowRef<boolean>(false);
+const showDeleteDialog = shallowRef<boolean>(false);
 const showForm = shallowRef(false);
-/*
- * TODO: Semua ref di bawah ganti jadi shallowRef.
- * Kalau actionData karena dia tipe data primitive,
- * kalau selectedField sama totalSelectedField karena properti/elemen di dalamnya enggak bakal diubah.
- * Referensi: Coding guide bagian 6.3.3, 'When to use shallowRef Variables?'
- *
- * Selain itu, selectedField dihapus aja, nanti di event toggle option kayak gini:
- * totalSelectedField = [$event]
- */
-const actionData = ref<boolean>(true);
-const selectedField = ref<CustomField>();
-const totalSelectedField = ref<CustomField[]>();
 
-const getDataTable = async (): Promise<FetchResponse | undefined> => {
+const actionData = shallowRef<boolean>(true);
+const selectedFields = shallowRef<CustomField[]>();
+
+const tableName = computed<string>(() => {
+  return `/customfield/${route.params.type === 'specific' ? 'specific' : 'global'}`;
+});
+
+const getDataTable = async (
+  params: QueryParams,
+): Promise<FetchResponse | undefined> => {
   try {
-    const response = await fetch('../../../../cypress/fixtures/fields.json');
-    const data = await response.json();
+    const { data } = await CustomFieldService.getListCustomField(params);
     return data;
   } catch (err) {
     console.error(err);
@@ -130,26 +127,52 @@ const getDataTable = async (): Promise<FetchResponse | undefined> => {
 
 <template>
   <CustomFieldHeader
-    :selected-fields="totalSelectedField as CustomField[]"
+    :selected-fields="selectedFields as CustomField[]"
+    :table-name="tableName"
+    @active-field="
+      (field, state) => {
+        selectedFields = field;
+        isActiveDialog = state;
+        showDialog = true;
+      }
+    "
+    @delete-field="
+      showDeleteDialog = true;
+      selectedFields = $event;
+    "
     @show-form="
       showForm = $event;
-      selectedField = undefined;
+      selectedFields = undefined;
     "
   />
-  <CustomFieldFilter />
+  <CustomFieldFilter :table-name="tableName" />
   <DataTable
+    :key="tableName"
     :columns="fieldTableColumn"
+    :default-query-params="{
+      specific: route.path === '/customfield/specific',
+    }"
     :fetch-function="getDataTable"
     :options="fieldSingleAction"
-    @select-data="totalSelectedField = $event"
-    @toggle-option="selectedField = $event"
-    table-name="custom-field"
+    :table-name="tableName"
+    @toggle-option="selectedFields = [$event]"
+    use-paginator
   />
-  <CustomFieldForm v-model:visible="showForm" :field="selectedField" />
+  <CustomFieldForm v-model:visible="showForm" :field="selectedFields?.[0]" />
   <DialogConfirm
     v-model:visible="showDialog"
+    :header="isActiveDialog ? 'Activate' : 'Deactivate'"
+    :list="selectedFields"
+    :severity="isActiveDialog ? 'success' : 'danger'"
+    @hide="console.log(actionData)"
+    list-label="fieldName"
+  />
+  <DialogConfirm
+    v-model:visible="showDeleteDialog"
+    :list="selectedFields"
     @hide="console.log(actionData)"
     header="Any"
+    list-label="fieldName"
     severity="danger"
   />
 </template>

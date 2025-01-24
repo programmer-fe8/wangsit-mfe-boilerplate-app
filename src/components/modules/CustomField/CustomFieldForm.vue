@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { shallowRef } from 'vue';
+
 import {
   ButtonRadio,
   DialogForm,
@@ -7,7 +9,6 @@ import {
   InputBadge,
   MultiSelect,
 } from 'wangsvue';
-
 import { CustomField } from '@/types/customfield.type';
 
 defineProps<{ selectedField?: CustomField }>();
@@ -16,6 +17,9 @@ const visible = defineModel<boolean>('visible', {
   required: true,
   default: false,
 });
+
+const selectedDataType = shallowRef<string>();
+const modelRadio = shallowRef();
 </script>
 
 <template>
@@ -23,10 +27,11 @@ const visible = defineModel<boolean>('visible', {
     v-model:visible="visible"
     :buttons-template="['submit', 'cancel', 'clear']"
     :closable="false"
+    @show="modelRadio = 'no'"
     header="Create Custom"
     severity="danger"
     show-stay-checkbox
-    width="small"
+    width="medium"
   >
     <template #fields>
       <InputText
@@ -40,26 +45,27 @@ const visible = defineModel<boolean>('visible', {
         mandatory
         use-validator
       />
-      <Dropdown label="Data Type" mandatory />
+      <Dropdown v-model="selectedDataType" label="Data Type" mandatory />
       <InputBadge
-        :existing-values="['ada@mailnesia.com']"
-        field-info="Input badge info"
-        field-name="emails"
+        class="hidden"
+        field-info="Press enter to add new value"
+        field-name="value"
         label="Value"
         mandatory
-        type="email"
+        type="text"
         use-validator
       />
-      <div class="flex justify-between">
-        Required?
+      <div class="flex justify-between items-center">
+        <div class="flex items-center">Required?</div>
         <div class="flex gap-2">
-          <ButtonRadio label="Yes" value="yes" />
-          <ButtonRadio label="No" value="no" />
+          <ButtonRadio v-model="modelRadio" label="Yes" value="yes" />
+          <ButtonRadio v-model="modelRadio" label="No" value="no" />
         </div>
       </div>
       <MultiSelect
         :show-optional-text="false"
-        label="Status"
+        field-info="Custom fields will be applied to each item SKU under the selected item name."
+        label="Item Name"
         option-label="label"
         option-value="value"
         placeholder="Pilih status"

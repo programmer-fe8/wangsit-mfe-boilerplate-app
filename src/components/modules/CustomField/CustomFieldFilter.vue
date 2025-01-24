@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { FilterContainer } from 'wangsvue';
-import { assetFilterFields } from '../AssetTable/options/assetFilter';
+import { customFilterFields } from './option/customFieldFilter';
+
+defineProps<{ tableName: string }>();
 </script>
 <template>
-  <FilterContainer :fields="assetFilterFields" table-name="custom-field" />
+  <FilterContainer :fields="customFilterFields" :table-name="tableName" />
 </template>

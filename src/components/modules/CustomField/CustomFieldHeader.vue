@@ -8,35 +8,42 @@ import {
   Changelog,
 } from 'wangsvue';
 
-defineEmits<{
-  showForm: [value: boolean];
-}>();
-
-defineProps<{
-  selectedFields: CustomField[];
-}>();
-
-/*
- * TODO: Import sebelum define emit sama props
- * Referensi: Coding guide bagian 5.1
- */
 import { CustomField } from '@/types/customfield.type';
-
 import { MenuItem } from 'wangsvue/components/menuitem';
+
+const emit = defineEmits<{
+  showForm: [state: boolean];
+  deleteField: [field: CustomField[]];
+  activeField: [field: CustomField[], state: boolean];
+}>();
+
+const props = defineProps<{
+  selectedFields: CustomField[];
+  tableName: string;
+}>();
 
 const bulkAction: MenuItem[] = [
   {
     label: 'Active',
     icon: 'check',
+    command: (): void => {
+      emit('activeField', props.selectedFields, true);
+    },
   },
   {
     label: 'Unactive',
     icon: 'close',
+    command: (): void => {
+      emit('activeField', props.selectedFields, false);
+    },
   },
   {
     label: 'Delete',
     icon: 'delete-bin',
     danger: true,
+    command: (): void => {
+      emit('deleteField', props.selectedFields);
+    },
   },
 ];
 </script>
@@ -46,18 +53,18 @@ const bulkAction: MenuItem[] = [
     <div>
       <ButtonBulkAction
         :options="bulkAction"
-        :selected-data="selectedFields"
-        table-name="custom-field"
+        :selected-data="props.selectedFields"
+        :table-name="props.tableName"
       />
     </div>
     <div class="flex">
-      <ButtonSearch class="ml-4" table-name="custom-field" />
-      <ButtonFilter class="ml-4" table-name="custom-field" />
+      <ButtonSearch :table-name="props.tableName" class="ml-4" />
+      <ButtonFilter :table-name="props.tableName" class="ml-4" />
       <ButtonDownload class="ml-4 mr-4" />
       <Changelog
+        :table-name="props.tableName"
         header="Changelog: Custom Field > Any"
         object="Tim"
-        table-name="normal-changelog"
       />
       <Button
         @click="$emit('showForm', true)"

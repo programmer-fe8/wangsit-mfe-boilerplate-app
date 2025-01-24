@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { watch, shallowRef, computed } from 'vue';
+import { watch, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { BreadcrumbMenu } from 'wangsvue/components/breadcrumb/Breadcrumb.vue';
 import { useBreadcrumbStore } from '@/store';
@@ -15,22 +15,26 @@ const fieldMenu: MenuItem[] = [
 ];
 
 const getBreadcrumb = computed<BreadcrumbMenu[]>(() => {
-  // TODO: baseRoute jadiin array aja, terus kalau ada currentTypeRoute, dipush ke baseRoute
-  const baseRoute = { name: 'Custom Field', route: '/customfield' };
+  const baseRoute = [{ name: 'Custom Field', route: '/customfield' }];
   const currentTypeRoute = fieldMenu.find((item) => item.route === route.path);
 
-  return currentTypeRoute
-    ? [baseRoute, { name: currentTypeRoute.label as string }]
-    : [baseRoute];
+  if (currentTypeRoute) {
+    baseRoute.push({
+      name: currentTypeRoute.label as string,
+      route: currentTypeRoute.route as string,
+    });
+  }
+
+  return baseRoute;
 });
 
 // TODO: Ini jadi computed aja
-const tabMessage = (): string => {
+const tabMessage = computed((): string => {
   if (route.path === '/customfield/global') {
     return 'This field is applied at the SKU item level and is valid globally for all stocks under that SKU.';
   }
   return 'This field is applied at the individual stock level, allowing the management of unique information for each stock unit, such as serial numbers.';
-};
+});
 
 watch(
   () => route.path,
@@ -39,13 +43,10 @@ watch(
   },
   { immediate: true },
 );
-
-// TODO: Ini hapus aja
-const subTabActiveIndex = shallowRef(0);
 </script>
 
 <template>
-  <TabMenu v-model:active-index="subTabActiveIndex" :menu="fieldMenu" />
-  {{ tabMessage() }}
+  <TabMenu :menu="fieldMenu" />
+  {{ tabMessage }}
   <router-view />
 </template>
