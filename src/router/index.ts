@@ -17,6 +17,10 @@ const routes: Readonly<RouteRecordRaw[]> = [
         name: 'AnotherExampleView',
         component: (): Promise<Component> => import('@/views/ExampleView2.vue'),
       },
+      /*
+       * TODO: Nama route harus dalam format PascalCase (misal AssetsView)
+       * Referensi: Coding guide 6.6.1 langkah 5
+       */
       {
         path: 'assets',
         name: 'Assetsview',
@@ -35,6 +39,10 @@ const routes: Readonly<RouteRecordRaw[]> = [
         component: (): Promise<Component> =>
           import('@/views/CustomFieldView.vue'),
         children: [
+          /*
+           * TODO: komponen cuma boleh diimport dari folder view, enggak boleh dari module
+           * Referensi: Coding guide 6.6.1 langkah 4
+           */
           {
             path: ':type(global|specific)',
             name: 'CustomFieldSpecificview',

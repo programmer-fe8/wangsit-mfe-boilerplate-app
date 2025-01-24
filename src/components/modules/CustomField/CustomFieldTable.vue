@@ -32,6 +32,7 @@ const fieldSingleAction: MenuItem[] = [
   },
 ];
 
+// TODO: Ini jadi const aja
 const fieldTableColumn = computed<TableColumn[]>(() => {
   return [
     {
@@ -103,6 +104,15 @@ const fieldTableColumn = computed<TableColumn[]>(() => {
 
 const showDialog = shallowRef<boolean>(false);
 const showForm = shallowRef(false);
+/*
+ * TODO: Semua ref di bawah ganti jadi shallowRef.
+ * Kalau actionData karena dia tipe data primitive,
+ * kalau selectedField sama totalSelectedField karena properti/elemen di dalamnya enggak bakal diubah.
+ * Referensi: Coding guide bagian 6.3.3, 'When to use shallowRef Variables?'
+ *
+ * Selain itu, selectedField dihapus aja, nanti di event toggle option kayak gini:
+ * totalSelectedField = [$event]
+ */
 const actionData = ref<boolean>(true);
 const selectedField = ref<CustomField>();
 const totalSelectedField = ref<CustomField[]>();

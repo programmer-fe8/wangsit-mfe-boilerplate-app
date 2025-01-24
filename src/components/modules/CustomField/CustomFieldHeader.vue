@@ -16,6 +16,10 @@ defineProps<{
   selectedFields: CustomField[];
 }>();
 
+/*
+ * TODO: Import sebelum define emit sama props
+ * Referensi: Coding guide bagian 5.1
+ */
 import { CustomField } from '@/types/customfield.type';
 
 import { MenuItem } from 'wangsvue/components/menuitem';

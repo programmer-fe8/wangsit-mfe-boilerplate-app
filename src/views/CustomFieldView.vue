@@ -15,6 +15,7 @@ const fieldMenu: MenuItem[] = [
 ];
 
 const getBreadcrumb = computed<BreadcrumbMenu[]>(() => {
+  // TODO: baseRoute jadiin array aja, terus kalau ada currentTypeRoute, dipush ke baseRoute
   const baseRoute = { name: 'Custom Field', route: '/customfield' };
   const currentTypeRoute = fieldMenu.find((item) => item.route === route.path);
 
@@ -23,6 +24,7 @@ const getBreadcrumb = computed<BreadcrumbMenu[]>(() => {
     : [baseRoute];
 });
 
+// TODO: Ini jadi computed aja
 const tabMessage = (): string => {
   if (route.path === '/customfield/global') {
     return 'This field is applied at the SKU item level and is valid globally for all stocks under that SKU.';
@@ -38,6 +40,7 @@ watch(
   { immediate: true },
 );
 
+// TODO: Ini hapus aja
 const subTabActiveIndex = shallowRef(0);
 </script>
 
