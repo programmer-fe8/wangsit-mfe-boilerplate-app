@@ -2,9 +2,9 @@
 import { computed, shallowRef } from 'vue';
 
 import { useRoute } from 'vue-router';
-import { MenuItem } from 'wangsvue/components/menuitem';
 import { BadgeGroup, DataTable, DialogConfirm } from 'wangsvue';
 import { CustomField } from '@/types/customfield.type';
+import { MenuItem } from 'wangsvue/components/menuitem';
 import {
   FetchResponse,
   TableColumn,
@@ -14,8 +14,8 @@ import {
 
 import CustomFieldHeader from './CustomFieldHeader.vue';
 import CustomFieldFilter from './CustomFieldFilter.vue';
-import CustomFieldForm from './CustomFieldForm.vue';
 import CustomFieldService from '@/services/customfield.service';
+import CustomFieldForm from './CustomFieldForm.vue';
 
 const route = useRoute();
 
@@ -100,17 +100,18 @@ const fieldTableColumn: TableColumn[] = [
   },
 ];
 
-const isActiveDialog = shallowRef<boolean>();
-
+const isBulkDeleteDialog = shallowRef<boolean>();
+const typeActivationDialog = shallowRef<boolean>();
 const showDialog = shallowRef<boolean>(false);
 const showDeleteDialog = shallowRef<boolean>(false);
-const showForm = shallowRef(false);
-
+const showForm = shallowRef<boolean>(false);
 const actionData = shallowRef<boolean>(true);
 const selectedFields = shallowRef<CustomField[]>();
+const selectedFieldByCheckBox = shallowRef<CustomField[]>([]);
 
 const tableName = computed<string>(() => {
-  return `/customfield/${route.params.type === 'specific' ? 'specific' : 'global'}`;
+  const { type } = route.params;
+  return type === 'specific' ? '/customfield/specific' : '/customfield/global';
 });
 
 const getDataTable = async (
@@ -123,27 +124,33 @@ const getDataTable = async (
     console.error(err);
   }
 };
+
+const handleActive = (field: CustomField[], state: boolean): void => {
+  selectedFieldByCheckBox.value = field;
+  typeActivationDialog.value = state;
+  showDialog.value = true;
+};
+
+const handleDelete = (field: CustomField[], state: boolean): void => {
+  selectedFieldByCheckBox.value = field;
+  isBulkDeleteDialog.value = state;
+  showDeleteDialog.value = true;
+};
 </script>
 
 <template>
   <CustomFieldHeader
-    :selected-fields="selectedFields as CustomField[]"
+    v-model:visible="showForm"
+    :field-detail="selectedFields as CustomField[]"
+    :selected-fields="selectedFieldByCheckBox as CustomField[]"
     :table-name="tableName"
-    @active-field="
+    @activation-field="
       (field, state) => {
-        selectedFields = field;
-        isActiveDialog = state;
-        showDialog = true;
+        handleActive(field, state);
       }
     "
-    @delete-field="
-      showDeleteDialog = true;
-      selectedFields = $event;
-    "
-    @show-form="
-      showForm = $event;
-      selectedFields = undefined;
-    "
+    @delete-field="(field, state) => handleDelete(field, state)"
+    @show-form="showForm = $event"
   />
   <CustomFieldFilter :table-name="tableName" />
   <DataTable
@@ -155,22 +162,37 @@ const getDataTable = async (
     :fetch-function="getDataTable"
     :options="fieldSingleAction"
     :table-name="tableName"
-    @toggle-option="selectedFields = [$event]"
+    @select-data="
+      selectedFieldByCheckBox = $event;
+      console.log(selectedFieldByCheckBox);
+    "
+    @toggle-option="
+      selectedFields = [$event];
+      console.log(selectedFields);
+    "
     use-paginator
   />
   <CustomFieldForm v-model:visible="showForm" :field="selectedFields?.[0]" />
   <DialogConfirm
     v-model:visible="showDialog"
-    :header="isActiveDialog ? 'Activate' : 'Deactivate'"
-    :list="selectedFields"
-    :severity="isActiveDialog ? 'success' : 'danger'"
+    :header="typeActivationDialog ? 'Activate' : 'Deactivate'"
+    :list="selectedFieldByCheckBox"
+    :message="
+      typeActivationDialog
+        ? 'Are you sure you want to activate it'
+        : 'Are you sure you want to unactivate it'
+    "
+    :severity="typeActivationDialog ? 'success' : 'danger'"
     @hide="console.log(actionData)"
     list-label="fieldName"
   />
   <DialogConfirm
     v-model:visible="showDeleteDialog"
-    :list="selectedFields"
-    @hide="console.log(actionData)"
+    :list="isBulkDeleteDialog ? selectedFieldByCheckBox : selectedFields"
+    @hide="
+      console.log(actionData);
+      isBulkDeleteDialog = false;
+    "
     header="Any"
     list-label="fieldName"
     severity="danger"

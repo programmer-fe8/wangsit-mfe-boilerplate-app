@@ -13,8 +13,8 @@ import { MenuItem } from 'wangsvue/components/menuitem';
 
 const emit = defineEmits<{
   showForm: [state: boolean];
-  deleteField: [field: CustomField[]];
-  activeField: [field: CustomField[], state: boolean];
+  deleteField: [field: CustomField[], state: boolean];
+  activationField: [field: CustomField[], state: boolean];
 }>();
 
 const props = defineProps<{
@@ -27,14 +27,14 @@ const bulkAction: MenuItem[] = [
     label: 'Active',
     icon: 'check',
     command: (): void => {
-      emit('activeField', props.selectedFields, true);
+      emit('activationField', props.selectedFields, true);
     },
   },
   {
     label: 'Unactive',
     icon: 'close',
     command: (): void => {
-      emit('activeField', props.selectedFields, false);
+      emit('activationField', props.selectedFields, false);
     },
   },
   {
@@ -42,7 +42,7 @@ const bulkAction: MenuItem[] = [
     icon: 'delete-bin',
     danger: true,
     command: (): void => {
-      emit('deleteField', props.selectedFields);
+      emit('deleteField', props.selectedFields, true);
     },
   },
 ];

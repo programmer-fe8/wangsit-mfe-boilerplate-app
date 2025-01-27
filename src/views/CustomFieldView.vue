@@ -28,7 +28,6 @@ const getBreadcrumb = computed<BreadcrumbMenu[]>(() => {
   return baseRoute;
 });
 
-// TODO: Ini jadi computed aja
 const tabMessage = computed((): string => {
   if (route.path === '/customfield/global') {
     return 'This field is applied at the SKU item level and is valid globally for all stocks under that SKU.';
