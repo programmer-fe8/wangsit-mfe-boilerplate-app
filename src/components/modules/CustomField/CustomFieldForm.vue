@@ -56,7 +56,6 @@ const resetValue = (): void => {
     @clear="resetValue"
     @close="resetValue"
     @show="modelRadio = 'no'"
-    ;width="medium"
     cancel-btn-label="Cancel"
     clear-btn-label="Clear Field"
     header="Create Custom"
@@ -64,6 +63,7 @@ const resetValue = (): void => {
     show-stay-checkbox
     stay-checkbox-label="Stay on this after submiting"
     submit-btn-label="Create"
+    width="medium"
   >
     <template #fields>
       <InputText
