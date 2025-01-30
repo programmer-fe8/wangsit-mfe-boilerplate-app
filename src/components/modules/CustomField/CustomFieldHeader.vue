@@ -59,7 +59,7 @@ const bulkAction: MenuItem[] = [
     </div>
     <div class="flex">
       <ButtonSearch :table-name="props.tableName" class="ml-4" />
-      <ButtonFilter :table-name="props.tableName" class="ml-4" />
+      <ButtonFilter :key="tableName" :table-name="tableName" class="ml-4" />
       <ButtonDownload class="ml-4 mr-4" />
       <Changelog
         :table-name="props.tableName"
