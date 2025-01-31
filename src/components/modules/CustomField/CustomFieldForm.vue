@@ -161,7 +161,7 @@ watch(
   >
     <template #fields>
       <InputText
-        :existing-values="props.existingFieldName"
+        :existing-values="props.field?._id ? [] : props.existingFieldName"
         :model-value="props.field?.fieldName"
         :validator-message="{
           exceed: 'Max. 30 characters',
