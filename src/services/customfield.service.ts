@@ -49,16 +49,16 @@ const CustomFieldService = {
     return API().put(`v2/settings/customfield/${id}`, data);
   },
 
-  activateFields: (fieldId: string[]): Promise<AxiosResponse> => {
+  activateField: (fieldId: string[]): Promise<AxiosResponse> => {
     return API().patch('v2/settings/customfield/activate', {
       _id: fieldId,
     });
   },
 
-  inactivateFields: (fieldId: string[]): Promise<AxiosResponse> => {
+  inactivateField: (fieldId: string[]): Promise<AxiosResponse> => {
     return API().patch('v2/settings/customfield/inactivate', { _id: fieldId });
   },
-  deleteFields: (fieldId: string[]): Promise<AxiosResponse> => {
+  deleteField: (fieldId: string[]): Promise<AxiosResponse> => {
     return API().delete('v2/settings/customfield', { data: { _id: fieldId } });
   },
 };

@@ -81,7 +81,7 @@ const fieldTableColumn: TableColumn[] = [
            */
           if (state) {
             try {
-              await CustomFieldService.activateFields([data._id]);
+              await CustomFieldService.activateField([data._id]);
               toast.add({
                 severity: 'success',
                 message: 'custom field has been activated.',
@@ -101,7 +101,7 @@ const fieldTableColumn: TableColumn[] = [
           } else {
             // If state is false, inactivate
             try {
-              await CustomFieldService.inactivateFields([data._id]);
+              await CustomFieldService.inactivateField([data._id]);
               toast.add({
                 severity: 'success',
                 message: 'custom field has been inactivated.',
@@ -147,6 +147,7 @@ const fieldTableColumn: TableColumn[] = [
           labels: data.value || [],
           limit: 2,
           severity: 'primary',
+          headerLabel: 'Value',
         },
       };
     },
@@ -209,11 +210,11 @@ const getDataTable = async (
   }
 };
 
-const activationField = async (): Promise<void> => {
+const activationFields = async (): Promise<void> => {
   // Validate action ( activate or inactivate )
   if (activationDialogType.value) {
     try {
-      await CustomFieldService.activateFields(
+      await CustomFieldService.activateField(
         selectedFieldByCheckBox.value.map((field) => field._id),
       );
       toast.add({
@@ -236,7 +237,7 @@ const activationField = async (): Promise<void> => {
     }
   } else {
     try {
-      await CustomFieldService.inactivateFields(
+      await CustomFieldService.inactivateField(
         selectedFieldByCheckBox.value.map((field) => field._id),
       );
       toast.add({
@@ -264,7 +265,7 @@ const deleteFields = async (): Promise<void> => {
    */
   if (isBulkDeleteDialog.value) {
     try {
-      await CustomFieldService.deleteFields(
+      await CustomFieldService.deleteField(
         selectedFieldByCheckBox.value.map((field) => field._id),
       );
       toast.add({
@@ -287,7 +288,7 @@ const deleteFields = async (): Promise<void> => {
     }
   } else {
     try {
-      await CustomFieldService.deleteFields(
+      await CustomFieldService.deleteField(
         selectedField.value?.map((field) => field._id) as string[],
       );
       toast.add({
@@ -368,7 +369,7 @@ const handleDelete = (field: CustomField[], state: boolean): void => {
         : 'Are you sure you want to inactivate it'
     "
     :severity="activationDialogType ? 'success' : 'danger'"
-    @confirm="activationField"
+    @confirm="activationFields"
     list-label="fieldName"
   />
   <DialogConfirm
@@ -376,7 +377,7 @@ const handleDelete = (field: CustomField[], state: boolean): void => {
     :list="isBulkDeleteDialog ? selectedFieldByCheckBox : selectedField"
     @confirm="deleteFields"
     @hide="isBulkDeleteDialog = false"
-    header="Any"
+    header="Delete Custom Field"
     list-label="fieldName"
     severity="danger"
   />

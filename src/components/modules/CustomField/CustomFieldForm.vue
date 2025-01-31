@@ -140,17 +140,17 @@ watch(
     :buttons-template="['submit', 'cancel', 'clear']"
     :closable="false"
     :header="props.field?._id ? 'Edit Custom Field' : 'Create Custom Field'"
+    :show-stay-checkbox="props.field ? false : true"
     @clear="resetValue"
     @close="resetValue"
     @show="
-      modelRadio = false;
+      props.field?.required ? (modelRadio = true) : (modelRadio = false);
       selectedDataType = props.field?.dataType as string;
     "
     @submit="apply"
     cancel-btn-label="Cancel"
     clear-btn-label="Clear Field"
     severity="danger"
-    show-stay-checkbox
     stay-checkbox-label="Stay on this after submiting"
     submit-btn-label="Create"
     width="medium"
