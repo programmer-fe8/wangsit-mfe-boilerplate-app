@@ -4,13 +4,13 @@ import { computed, shallowRef } from 'vue';
 import { useRoute } from 'vue-router';
 import {
   BadgeGroup,
+  Checkbox,
   DataTable,
   DialogConfirm,
-  useToast,
   eventBus,
+  useToast,
 } from 'wangsvue';
 import { CustomField } from '@/types/customfield.type';
-import { DialogConfirmProps } from 'wangsvue/components/dialogconfirm/DialogConfirm.vue';
 import { MenuItem } from 'wangsvue/components/menuitem';
 import {
   FetchResponse,
@@ -45,18 +45,6 @@ const fieldSingleAction: MenuItem[] = [
   },
 ];
 
-const activeDialogProps: Omit<DialogConfirmProps, 'visible'> = {
-  header: 'Test',
-  severity: 'success',
-  listLabel: 'fieldName',
-};
-
-const inactiveDialogProps: Omit<DialogConfirmProps, 'visible'> = {
-  header: 'Test',
-  severity: 'danger',
-  listLabel: 'fieldName',
-};
-
 const fieldTableColumn: TableColumn[] = [
   {
     field: 'active',
@@ -65,63 +53,13 @@ const fieldTableColumn: TableColumn[] = [
     fixed: true,
     preset: {
       type: 'toggle',
-      onToggle(state): void {
-        // Change confirm dialog properties based on state
-        if (state) {
-          this.confirmDialogProps = activeDialogProps;
-        } else {
-          this.confirmDialogProps = inactiveDialogProps;
-        }
-      },
-      onConfirm: async (state, data, revertFunction): Promise<void> => {
-        try {
-          /*
-           * Validate action ( active or inactive )
-           * if state is true, activate
-           */
-          if (state) {
-            try {
-              await CustomFieldService.activateField([data._id]);
-              toast.add({
-                severity: 'success',
-                message: 'custom field has been activated.',
-              });
-              eventBus.emit('data-table:update', {
-                tableName: tableName.value,
-              });
-            } catch (error) {
-              console.error(error);
-              revertFunction();
-              toast.add({
-                severity: 'error',
-                message:
-                  'failed to activate custom field. Please check your connection and try again.',
-              });
-            }
-          } else {
-            // If state is false, inactivate
-            try {
-              await CustomFieldService.inactivateField([data._id]);
-              toast.add({
-                severity: 'success',
-                message: 'custom field has been inactivated.',
-              });
-              eventBus.emit('data-table:update', {
-                tableName: tableName.value,
-              });
-            } catch (error) {
-              console.error(error);
-              revertFunction();
-              toast.add({
-                severity: 'error',
-                message:
-                  'failed to inactivate custom field. Please check your connection and try again.',
-              });
-            }
-          }
-        } catch (error) {
-          console.error(error);
-        }
+      onToggle(state, data, revertFunction): void {
+        showDialog.value = true;
+
+        isToggleActivate.value = true;
+        activationDialogType.value = state;
+        selectedField.value = [data] as CustomField[];
+        handleRevert.value = revertFunction;
       },
     },
   },
@@ -185,6 +123,8 @@ const showDeleteDialog = shallowRef<boolean>(false);
 
 const activationDialogType = shallowRef<boolean>();
 const isBulkDeleteDialog = shallowRef<boolean>();
+const isToggleActivate = shallowRef<boolean>();
+const handleRevert = shallowRef<() => void>();
 
 /*
  * SelectedFieldByCheckBox is used for bulk action
@@ -210,13 +150,15 @@ const getDataTable = async (
   }
 };
 
-const activationFields = async (): Promise<void> => {
+const activationFields = async (
+  state: boolean,
+  fields: CustomField[],
+  revertFunction: () => void,
+): Promise<void> => {
   // Validate action ( activate or inactivate )
-  if (activationDialogType.value) {
+  if (state) {
     try {
-      await CustomFieldService.activateField(
-        selectedFieldByCheckBox.value.map((field) => field._id),
-      );
+      await CustomFieldService.activateField(fields.map((field) => field._id));
       toast.add({
         severity: 'success',
         message: 'custom field has been activated.',
@@ -234,11 +176,14 @@ const activationFields = async (): Promise<void> => {
         message:
           'failed to activate custom field. Please check your connection and try again.',
       });
+      if (isToggleActivate.value) {
+        revertFunction();
+      }
     }
   } else {
     try {
       await CustomFieldService.inactivateField(
-        selectedFieldByCheckBox.value.map((field) => field._id),
+        fields.map((field) => field._id),
       );
       toast.add({
         severity: 'success',
@@ -254,6 +199,9 @@ const activationFields = async (): Promise<void> => {
         message:
           'failed to inactivate custom field. Please check your connection and try again.',
       });
+      if (isToggleActivate.value) {
+        revertFunction();
+      }
     }
   }
 };
@@ -266,7 +214,7 @@ const deleteFields = async (): Promise<void> => {
   if (isBulkDeleteDialog.value) {
     try {
       await CustomFieldService.deleteField(
-        selectedFieldByCheckBox.value.map((field) => field._id),
+        selectedFieldByCheckBox.value.map((field) => field._id) as string[],
       );
       toast.add({
         severity: 'success',
@@ -322,6 +270,7 @@ const handleDelete = (field: CustomField[], state: boolean): void => {
 };
 </script>
 
+<!-- eslint-disable vue/html-indent -->
 <template>
   <CustomFieldHeader
     v-model:visible="showForm"
@@ -362,16 +311,43 @@ const handleDelete = (field: CustomField[], state: boolean): void => {
     :header="
       activationDialogType ? 'Activate Custom Field' : 'Inactivate Custom Field'
     "
-    :list="selectedFieldByCheckBox"
-    :message="
-      activationDialogType
-        ? 'Are you sure you want to activate it'
-        : 'Are you sure you want to inactivate it'
-    "
+    :list="isToggleActivate ? selectedField : selectedFieldByCheckBox"
     :severity="activationDialogType ? 'success' : 'danger'"
-    @confirm="activationFields"
+    @close="handleRevert"
+    @confirm="
+      isToggleActivate
+        ? activationFields(
+            activationDialogType as boolean,
+            selectedField as CustomField[],
+            handleRevert || (() => {}),
+          )
+        : activationFields(
+            activationDialogType as boolean,
+            selectedFieldByCheckBox as CustomField[],
+            handleRevert || (() => {}),
+          );
+      handleRevert?.();
+    "
+    @hide="isToggleActivate = false"
     list-label="fieldName"
-  />
+  >
+    <template #body>
+      <div>
+        <Checkbox
+          v-if="!activationDialogType"
+          :model-value="false"
+          class="mb-3"
+          label="Hide data that has already been entered"
+          tooltip="If you uncheck, data that you have been entered will not be hidden in the item and stock detail."
+        />
+        <span>{{
+          activationDialogType
+            ? 'Are you sure you want to activate it?'
+            : 'Are you sure you want to inactivate it?'
+        }}</span>
+      </div>
+    </template>
+  </DialogConfirm>
   <DialogConfirm
     v-model:visible="showDeleteDialog"
     :list="isBulkDeleteDialog ? selectedFieldByCheckBox : selectedField"
@@ -380,5 +356,17 @@ const handleDelete = (field: CustomField[], state: boolean): void => {
     header="Delete Custom Field"
     list-label="fieldName"
     severity="danger"
-  />
+  >
+    <template #body>
+      <div>
+        <Checkbox
+          :model-value="false"
+          class="mb-3"
+          label="Remove data that has already been entered"
+          tooltip="If you uncheck, data that you have been entered will not be removed in the item and stock detail."
+        />
+        <span>Are you sure you want to delete it</span>
+      </div>
+    </template>
+  </DialogConfirm>
 </template>
