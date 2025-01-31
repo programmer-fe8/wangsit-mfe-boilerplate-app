@@ -18,7 +18,11 @@ import { useRoute } from 'vue-router';
 
 import CustomFieldService from '@/services/customfield.service';
 
-const props = defineProps<{ field?: CustomField; tableName: string }>();
+const props = defineProps<{
+  field?: CustomField;
+  tableName: string;
+  existingFieldName: string[];
+}>();
 
 const visible = defineModel<boolean>('visible', {
   required: true,
@@ -157,6 +161,7 @@ watch(
   >
     <template #fields>
       <InputText
+        :existing-values="props.existingFieldName"
         :model-value="props.field?.fieldName"
         :validator-message="{
           exceed: 'Max. 30 characters',

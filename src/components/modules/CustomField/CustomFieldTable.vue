@@ -126,6 +126,8 @@ const isBulkDeleteDialog = shallowRef<boolean>();
 const isToggleActivate = shallowRef<boolean>();
 const handleRevert = shallowRef<() => void>();
 
+const existingFieldName = shallowRef<string[]>();
+
 /*
  * SelectedFieldByCheckBox is used for bulk action
  * SelectedField is used for single action
@@ -144,6 +146,9 @@ const getDataTable = async (
 ): Promise<FetchResponse | undefined> => {
   try {
     const { data } = await CustomFieldService.getListCustomField(params);
+    existingFieldName.value = data.data.data.map(
+      (field) => field.fieldName,
+    ) as string[];
     return data;
   } catch (err) {
     console.error(err);
@@ -303,6 +308,7 @@ const handleDelete = (field: CustomField[], state: boolean): void => {
   />
   <CustomFieldForm
     v-model:visible="showForm"
+    :existing-field-name="existingFieldName as string[]"
     :field="selectedField?.[0]"
     :table-name="tableName"
   />
